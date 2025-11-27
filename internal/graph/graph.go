@@ -63,13 +63,13 @@ func BuildGraph(lockfile *parser.Lockfile) (*Graph, error) {
 
 	// Step 3: Calculate depth and mark direct dependencies
 	// We'll use BFS (Breadth-First Search) from the root
-	calculateDepth(graph)
+	calculateDepth(graph, lockfile)
 
 	return graph, nil
 }
 
 // calculateDepth performs BFS to calculate depth and mark direct dependencies
-func calculateDepth(graph *Graph) {
+func calculateDepth(graph *Graph, lockfile *parser.Lockfile) {
 	// Queue for BFS: [node, depth]
 	type queueItem struct {
 		node  *Node
@@ -126,22 +126,15 @@ func calculateDepth(graph *Graph) {
 	// 1. Top-level packages (node_modules/X without further nesting in path) are direct
 	// 2. Calculate depth from root
 
-	// Mark direct dependencies (simple heuristic for now)
-	for path, node := range graph.Nodes {
-		// If path is node_modules/something (no further nesting), it's direct
-		// Count slashes: node_modules/lodash = 1 slash = direct
-		// node_modules/express/node_modules/foo = 3 slashes = transitive
-		slashCount := 0
-		for _, ch := range path {
-			if ch == '/' {
-				slashCount++
-			}
-		}
-
-		if slashCount == 1 {
-			// Direct dependency
+	// Mark direct dependencies using the lockfile's DirectDependencies map
+	for depName := range lockfile.DirectDependencies {
+		// Find the node for this direct dependency
+		depPath := "node_modules/" + depName
+		if node, exists := graph.Nodes[depPath]; exists {
 			node.IsDirect = true
 			node.Depth = 1
+
+			// Connect root to this direct dependency
 			graph.Root.Dependencies = append(graph.Root.Dependencies, node)
 			node.Dependents = append(node.Dependents, graph.Root)
 		}

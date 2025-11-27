@@ -1,0 +1,5 @@
+package_name,version,severity,reason,cve
+lodash,4.17.20,critical,Prototype pollution vulnerability,CVE-2020-8203
+express,4.17.1,high,Denial of service vulnerability,CVE-2022-24999
+ua-parser-js,0.7.29,critical,Malicious code injection - Shai Hulud attack,
+event-stream,3.3.6,critical,Compromised package with bitcoin stealer,

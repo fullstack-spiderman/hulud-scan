@@ -4,8 +4,11 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"strings"
 
+	"github.com/arjunu/hulud-scan/internal/graph"
 	"github.com/arjunu/hulud-scan/internal/parser"
+	"github.com/arjunu/hulud-scan/internal/scanner"
 	"github.com/spf13/cobra"
 )
 
@@ -64,21 +67,85 @@ func runScan(projectPath string, cmd *cobra.Command) error {
 	}
 
 	fmt.Printf("✅ Found %d packages\n", len(lockfile.Packages))
-	fmt.Printf("\nProject: %s@%s\n", lockfile.Name, lockfile.Version)
-	fmt.Printf("Lockfile version: %d\n\n", lockfile.LockfileVersion)
+	fmt.Printf("Project: %s@%s\n", lockfile.Name, lockfile.Version)
 
-	// Print first 5 packages as a sample
-	fmt.Println("Sample packages:")
-	count := 0
-	for path, pkg := range lockfile.Packages {
-		if count >= 5 {
-			break
-		}
-		fmt.Printf("  - %s@%s (path: %s)\n", pkg.Name, pkg.Version, path)
-		count++
+	// Step 2: Build dependency graph
+	fmt.Println("\n📊 Building dependency graph...")
+	dependencyGraph, err := graph.BuildGraph(lockfile)
+	if err != nil {
+		return fmt.Errorf("failed to build graph: %w", err)
 	}
 
-	fmt.Println("\n✨ TODO: Implement blocklist checking and script detection")
+	// Step 3: Load blocklist
+	// TODO: Make blocklist path configurable
+	blocklistPath := "testdata/sample-blocklist.csv"
+	if _, err := os.Stat(blocklistPath); os.IsNotExist(err) {
+		fmt.Printf("⚠️  No blocklist found at %s, skipping blocklist scan\n", blocklistPath)
+		return nil
+	}
+
+	fmt.Printf("📋 Loading blocklist from: %s\n", blocklistPath)
+	blocklist, err := scanner.LoadBlocklist(blocklistPath)
+	if err != nil {
+		return fmt.Errorf("failed to load blocklist: %w", err)
+	}
+	fmt.Printf("   Loaded %d blocklist entries\n", len(blocklist.Entries))
+
+	// Step 4: Scan for compromised packages
+	fmt.Println("\n🔍 Scanning for compromised packages...")
+	result := scanner.ScanGraph(dependencyGraph, blocklist)
+
+	// Step 5: Display results
+	fmt.Println()
+	fmt.Println(strings.Repeat("=", 60))
+	fmt.Println("SCAN RESULTS")
+	fmt.Println(strings.Repeat("=", 60))
+	fmt.Println()
+
+	fmt.Printf("Total packages scanned: %d\n", result.TotalPackages)
+	fmt.Printf("Issues found: %d\n\n", result.IssuesFound)
+
+	if result.IssuesFound == 0 {
+		fmt.Println("✅ No compromised packages detected!")
+		return nil
+	}
+
+	// Display findings
+	fmt.Printf("⚠️  SECURITY ISSUES DETECTED:\n\n")
+
+	for i, finding := range result.Findings {
+		fmt.Printf("%d. %s@%s [%s]\n", i+1, finding.PackageName, finding.Version, strings.ToUpper(string(finding.Severity)))
+
+		// Show dependency path
+		pathStr := strings.Join(finding.Path, " → ")
+		dependencyType := "transitive"
+		if finding.IsDirect {
+			dependencyType = "direct"
+		}
+		fmt.Printf("   Type: %s dependency\n", dependencyType)
+		fmt.Printf("   Path: %s\n", pathStr)
+		fmt.Printf("   Reason: %s\n", finding.Reason)
+
+		if finding.CVE != "" {
+			fmt.Printf("   CVE: %s\n", finding.CVE)
+		}
+
+		fmt.Println()
+	}
+
+	// Exit with error code if critical issues found
+	hasCritical := false
+	for _, finding := range result.Findings {
+		if finding.Severity == scanner.SeverityCritical {
+			hasCritical = true
+			break
+		}
+	}
+
+	if hasCritical {
+		fmt.Println("❌ Critical security issues detected!")
+		return fmt.Errorf("scan failed: critical issues found")
+	}
 
 	return nil
 }

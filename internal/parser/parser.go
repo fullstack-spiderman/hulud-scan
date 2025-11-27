@@ -33,12 +33,19 @@ func ParseLockfile(lockfilePath string) (*Lockfile, error) {
 		return nil, fmt.Errorf("failed to parse lockfile JSON: %w", err)
 	}
 
+	// Extract direct dependencies from root package (empty string key)
+	directDeps := make(map[string]string)
+	if rootPkg, exists := raw.Packages[""]; exists {
+		directDeps = rootPkg.Dependencies
+	}
+
 	// Convert to our internal Lockfile structure
 	lockfile := &Lockfile{
-		Name:            raw.Name,
-		Version:         raw.Version,
-		LockfileVersion: raw.LockfileVersion,
-		Packages:        make(map[string]*Package),
+		Name:               raw.Name,
+		Version:            raw.Version,
+		LockfileVersion:    raw.LockfileVersion,
+		Packages:           make(map[string]*Package),
+		DirectDependencies: directDeps,
 	}
 
 	// Process each package

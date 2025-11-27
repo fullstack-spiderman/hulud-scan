@@ -11,8 +11,9 @@ type Package struct {
 
 // Lockfile represents the parsed package-lock.json structure
 type Lockfile struct {
-	Name            string              // Project name
-	Version         string              // Project version
-	LockfileVersion int                 // npm lockfile format version
-	Packages        map[string]*Package // Map of package path -> Package info
+	Name               string              // Project name
+	Version            string              // Project version
+	LockfileVersion    int                 // npm lockfile format version
+	Packages           map[string]*Package // Map of package path -> Package info
+	DirectDependencies map[string]string   // Direct dependencies from root (name -> version range)
 }

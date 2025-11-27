@@ -1,0 +1,30 @@
+# Binaries
+hulud-scan
+*.exe
+*.dll
+*.so
+*.dylib
+
+# Test binary, built with `go test -c`
+*.test
+
+# Output of the go coverage tool
+*.out
+coverage.out
+
+# Go workspace file
+go.work
+
+# IDE
+.vscode/
+.idea/
+.claude/
+*.swp
+*.swo
+*~
+
+# Claude Code files
+CLAUDE.md
+
+# OS
+.DS_Store

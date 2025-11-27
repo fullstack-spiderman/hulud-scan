@@ -1,10 +1,11 @@
 # hulud-scan - Project Status
 
-## 📊 Completion Status: ✅ Phase 1 Complete!
+## 📊 Completion Status: ✅ Phase 1 Complete
 
 ### ✅ Completed Features
 
 #### Core Functionality
+
 - ✅ **Multi-format Lockfile Support**
   - npm (package-lock.json)
   - Yarn Classic (yarn.lock)
@@ -48,6 +49,7 @@
   - Table-driven tests for edge cases
 
 #### Documentation
+
 - ✅ Comprehensive README
 - ✅ Test data documentation (testdata/README.md)
 - ✅ Individual README for each test project
@@ -56,7 +58,7 @@
 
 ## 📈 Current Capabilities
 
-### What hulud-scan Can Do NOW:
+### What hulud-scan Can Do NOW
 
 1. **✅ Scan any JavaScript/TypeScript project**
    - Works with npm, Yarn, pnpm, or Bun
@@ -88,7 +90,7 @@
 
 ## 🧪 Test Coverage Summary
 
-```
+```text
 Module                                   Coverage
 ──────────────────────────────────────────────────
 internal/graph                           95.6%
@@ -99,7 +101,8 @@ cmd                                      0%* (manual testing)
 *CLI commands are tested manually
 ```
 
-### Test Files Created:
+### Test Files Created
+
 - ✅ `internal/parser/parser_test.go` (8 tests)
 - ✅ `internal/parser/detector_test.go` (5 tests)
 - ✅ `internal/parser/yarn_test.go` (6 tests)
@@ -108,11 +111,12 @@ cmd                                      0%* (manual testing)
 - ✅ `internal/scanner/scanner_test.go` (5 tests)
 - ✅ `internal/scanner/download_test.go` (8 tests)
 
-**Total: 40 automated tests, all passing ✅**
+#### Total: 40 automated tests, all passing ✅
 
 ## 📦 Sample Projects Available
 
-### For Testing:
+### For Testing
+
 1. ✅ **npm-project/** - Clean npm project
 2. ✅ **yarn-project/** - Clean Yarn Classic project
 3. ✅ **pnpm-project/** - Clean pnpm project
@@ -125,11 +129,13 @@ All projects documented with individual READMEs!
 ## 🚀 Quick Start
 
 ### Build
+
 ```bash
 go build -o hulud-scan
 ```
 
 ### Run
+
 ```bash
 # Scan current directory
 ./hulud-scan scan
@@ -185,6 +191,7 @@ go build -o hulud-scan
 ## 🔮 What's Next? (Future Phases)
 
 ### Phase 2 - Enhanced CLI
+
 - [ ] Lifecycle script detection & analysis
 - [ ] Config file support (.hulud-scan.yaml)
 - [ ] Whitelist/ignore mechanism
@@ -194,6 +201,7 @@ go build -o hulud-scan
 - [ ] Yarn Berry (v2+) support
 
 ### Phase 3 - TUI (Terminal UI)
+
 - [ ] Interactive dependency tree viewer
 - [ ] Real-time filtering and search
 - [ ] Mark false positives via UI
@@ -201,6 +209,7 @@ go build -o hulud-scan
 - [ ] Export reports from TUI
 
 ### Phase 4 - Web Dashboard
+
 - [ ] Backend API + database
 - [ ] Multi-repo scanning
 - [ ] Historical tracking
@@ -222,12 +231,14 @@ go build -o hulud-scan
 ## 📝 Technical Debt / TODOs
 
 ### High Priority
+
 - [ ] Add config file support (`.hulud-scan.yaml`)
 - [ ] Implement lifecycle script detection
 - [ ] Add whitelist/ignore mechanism
 - [ ] Improve error messages for common issues
 
 ### Medium Priority
+
 - [ ] Add progress indicators for large projects
 - [ ] Support Yarn Berry (v2+)
 - [ ] Add verbose/debug mode
@@ -235,6 +246,7 @@ go build -o hulud-scan
 - [ ] Add benchmark tests
 
 ### Low Priority
+
 - [ ] Add logo/branding
 - [ ] Create VS Code extension
 - [ ] GitHub Action wrapper
@@ -256,6 +268,7 @@ go build -o hulud-scan
 **hulud-scan Phase 1 is COMPLETE and PRODUCTION-READY!** 🎉
 
 The tool successfully:
+
 - ✅ Scans lockfiles from npm, Yarn, pnpm, and Bun
 - ✅ Detects compromised packages using blocklists
 - ✅ Provides clear, actionable reports
@@ -267,4 +280,4 @@ The tool successfully:
 
 ---
 
-*Last updated: 2025-11-27*
+### Last updated: 2025-11-27

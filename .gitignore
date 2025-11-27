@@ -1,5 +1,6 @@
 # Binaries
 hulud-scan
+hulud-scan.exe
 *.exe
 *.dll
 *.so
@@ -8,23 +9,31 @@ hulud-scan
 # Test binary, built with `go test -c`
 *.test
 
-# Output of the go coverage tool
+# Output of go coverage tool
 *.out
 coverage.out
 
 # Go workspace file
 go.work
 
+# Dependency directories
+vendor/
+
 # IDE
 .vscode/
 .idea/
-.claude/
 *.swp
 *.swo
 *~
 
-# Claude Code files
-CLAUDE.md
-
 # OS
 .DS_Store
+Thumbs.db
+
+# Cache
+.hulud-scan/
+*.log
+
+# Claude
+.claude/
+CLAUDE.md

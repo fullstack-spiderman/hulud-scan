@@ -2,10 +2,7 @@
 
 > Supply-chain security scanner for JavaScript/TypeScript projects
 
-[![Go Version](https://img.shields.io/badge/Go-1.21+-00ADD8?style=flat&logo=go)](https://go.dev)
-[![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-[![Tests](https://img.shields.io/badge/tests-40%20passing-brightgreen)]()
-[![Coverage](https://img.shields.io/badge/coverage-80%25-green)]()
+[![Go Version](https://img.shields.io/badge/Go-1.21+-00ADD8?style=flat&logo=go)](https://go.dev) [![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE) ![Tests](https://img.shields.io/badge/tests-40%20passing-brightgreen) ![Coverage](https://img.shields.io/badge/coverage-80%25-green)
 
 **hulud-scan** is an open-source CLI tool that detects compromised packages and supply-chain attacks in JavaScript/TypeScript projects by scanning lockfiles and comparing against known blocklists.
 
@@ -194,13 +191,13 @@ go test ./... -v
 - **internal/parser**: 72.9%
 - **internal/scanner**: 82.3%
 
-**40 automated tests, all passing ✅**
+### 40 automated tests, all passing ✅
 
 ---
 
 ## 🏗️ Architecture
 
-```
+```text
 hulud-scan/
 ├── cmd/                    # CLI commands (Cobra)
 │   ├── root.go            # Root command
@@ -227,12 +224,14 @@ hulud-scan/
 ## 🤝 Contributing
 
 We welcome contributions! Whether it's:
+
 - 🐛 Bug reports
 - 💡 Feature requests
 - 📖 Documentation improvements
 - 🔧 Code contributions
 
 📖 **See [CONTRIBUTING.md](CONTRIBUTING.md) for:**
+
 - Development setup
 - How to compile and test
 - Code structure
@@ -243,6 +242,7 @@ We welcome contributions! Whether it's:
 ## 🗺️ Roadmap
 
 ### ✅ Phase 1 - CLI (Complete!)
+
 - [x] Multi-package manager support (npm, Yarn, pnpm, Bun)
 - [x] Auto-detection
 - [x] Blocklist scanning
@@ -250,6 +250,7 @@ We welcome contributions! Whether it's:
 - [x] CI/CD integration
 
 ### 🔄 Phase 2 - Enhanced CLI (Planned)
+
 - [ ] Lifecycle script detection
 - [ ] Config file support
 - [ ] Whitelist/ignore mechanism
@@ -257,11 +258,13 @@ We welcome contributions! Whether it's:
 - [ ] Yarn Berry (v2+) support
 
 ### 🔮 Phase 3 - TUI (Future)
+
 - [ ] Interactive terminal UI
 - [ ] Visual dependency tree
 - [ ] Real-time filtering
 
 ### 🌐 Phase 4 - Web Dashboard (Future)
+
 - [ ] Multi-repo monitoring
 - [ ] Historical tracking
 - [ ] Alerts & notifications
@@ -304,6 +307,7 @@ We welcome contributions! Whether it's:
 hulud-scan supports two CSV formats:
 
 ### Wiz Format (Simple)
+
 ```csv
 Package,Version
 malicious-pkg,=1.0.0
@@ -311,6 +315,7 @@ bad-package,=2.1.0
 ```
 
 ### Full Format (Detailed)
+
 ```csv
 package_name,version,severity,reason,cve
 lodash,4.17.20,critical,Prototype pollution,CVE-2020-8203
@@ -324,6 +329,7 @@ express,4.17.1,high,DoS vulnerability,CVE-2022-24999
 ## 🌟 Use Cases
 
 ### For Developers
+
 ```bash
 # Scan before committing
 hulud-scan scan .
@@ -331,6 +337,7 @@ git commit -m "feat: new feature"
 ```
 
 ### For CI/CD
+
 ```yaml
 # GitHub Actions
 - name: Scan dependencies
@@ -338,6 +345,7 @@ git commit -m "feat: new feature"
 ```
 
 ### For Organizations
+
 ```bash
 # Scan all projects
 for dir in ~/projects/*; do
@@ -346,6 +354,7 @@ done
 ```
 
 ### For Security Teams
+
 ```bash
 # Custom enterprise blocklist
 hulud-scan scan . --blocklist https://internal.corp/blocklist.csv
@@ -369,9 +378,9 @@ MIT License - see [LICENSE](LICENSE) file for details
 
 ## 🔗 Links
 
-- **GitHub**: https://github.com/arjunu/hulud-scan
-- **Issues**: https://github.com/arjunu/hulud-scan/issues
-- **Wiz Blocklist**: https://github.com/wiz-sec-public/wiz-research-iocs
+- **GitHub**: <https://github.com/arjunu/hulud-scan>
+- **Issues**: <https://github.com/arjunu/hulud-scan/issues>
+- **Wiz Blocklist**: <https://github.com/wiz-sec-public/wiz-research-iocs>
 
 ---
 

@@ -46,6 +46,19 @@ func init() {
 
 	// --config flag for custom config file
 	scanCmd.Flags().StringP("config", "c", "", "Path to config file")
+
+	// --blocklist flag for blocklist URL or local path
+	scanCmd.Flags().String("blocklist",
+		"https://github.com/wiz-sec-public/wiz-research-iocs/blob/main/reports/shai-hulud-2-packages.csv",
+		"Blocklist URL or local file path")
+
+	// --cache-dir flag for cache directory
+	homeDir, _ := os.UserHomeDir()
+	defaultCacheDir := filepath.Join(homeDir, ".hulud-scan", "cache")
+	scanCmd.Flags().String("cache-dir", defaultCacheDir, "Cache directory for downloaded blocklists")
+
+	// --no-cache flag to disable caching
+	scanCmd.Flags().Bool("no-cache", false, "Disable caching (always download fresh)")
 }
 
 // runScan performs the actual scanning logic
@@ -76,20 +89,21 @@ func runScan(projectPath string, cmd *cobra.Command) error {
 		return fmt.Errorf("failed to build graph: %w", err)
 	}
 
-	// Step 3: Load blocklist
-	// TODO: Make blocklist path configurable
-	blocklistPath := "testdata/sample-blocklist.csv"
-	if _, err := os.Stat(blocklistPath); os.IsNotExist(err) {
-		fmt.Printf("⚠️  No blocklist found at %s, skipping blocklist scan\n", blocklistPath)
-		return nil
+	// Step 3: Load or download blocklist
+	blocklistPath, _ := cmd.Flags().GetString("blocklist")
+	cacheDir, _ := cmd.Flags().GetString("cache-dir")
+	noCache, _ := cmd.Flags().GetBool("no-cache")
+
+	if noCache {
+		cacheDir = "" // Disable caching
 	}
 
 	fmt.Printf("📋 Loading blocklist from: %s\n", blocklistPath)
-	blocklist, err := scanner.LoadBlocklist(blocklistPath)
+	blocklist, err := scanner.LoadOrDownloadBlocklist(blocklistPath, cacheDir)
 	if err != nil {
 		return fmt.Errorf("failed to load blocklist: %w", err)
 	}
-	fmt.Printf("   Loaded %d blocklist entries\n", len(blocklist.Entries))
+	fmt.Printf("✅ Loaded %d blocklist entries\n", len(blocklist.Entries))
 
 	// Step 4: Scan for compromised packages
 	fmt.Println("\n🔍 Scanning for compromised packages...")

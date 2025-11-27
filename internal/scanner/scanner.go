@@ -20,7 +20,14 @@ func LoadBlocklist(path string) (*Blocklist, error) {
 
 	// Create CSV reader
 	reader := csv.NewReader(file)
+	return parseBlocklistCSV(reader)
+}
 
+// parseBlocklistCSV parses CSV into Blocklist
+// Supports two formats:
+// 1. Full format: package_name,version,severity,reason,cve
+// 2. Wiz format: Package,Version (with "=" prefix)
+func parseBlocklistCSV(reader *csv.Reader) (*Blocklist, error) {
 	// Read all records
 	records, err := reader.ReadAll()
 	if err != nil {
@@ -32,7 +39,12 @@ func LoadBlocklist(path string) (*Blocklist, error) {
 		return nil, fmt.Errorf("blocklist file is empty or missing header")
 	}
 
-	// First row is header, skip it
+	// Read header to detect format
+	header := records[0]
+	isWizFormat := len(header) == 2 &&
+		(strings.ToLower(header[0]) == "package" || strings.ToLower(header[0]) == "package_name")
+
+	// Skip header
 	records = records[1:]
 
 	// Parse entries
@@ -40,21 +52,32 @@ func LoadBlocklist(path string) (*Blocklist, error) {
 	index := make(map[string][]int)
 
 	for i, record := range records {
-		// CSV format: package_name,version,severity,reason,cve
-		if len(record) < 4 {
+		if len(record) < 2 {
 			continue // Skip malformed rows
 		}
 
-		entry := BlocklistEntry{
-			PackageName: strings.TrimSpace(record[0]),
-			Version:     strings.TrimSpace(record[1]),
-			Severity:    Severity(strings.TrimSpace(record[2])),
-			Reason:      strings.TrimSpace(record[3]),
-		}
+		var entry BlocklistEntry
 
-		// CVE is optional (column 5)
-		if len(record) >= 5 {
-			entry.CVE = strings.TrimSpace(record[4])
+		if isWizFormat {
+			// Wiz format: Package,Version (e.g., "lodash", "= 0.0.7")
+			entry = parseWizEntry(record)
+		} else {
+			// Full format: package_name,version,severity,reason,cve
+			if len(record) < 4 {
+				continue
+			}
+
+			entry = BlocklistEntry{
+				PackageName: strings.TrimSpace(record[0]),
+				Version:     strings.TrimSpace(record[1]),
+				Severity:    Severity(strings.TrimSpace(record[2])),
+				Reason:      strings.TrimSpace(record[3]),
+			}
+
+			// CVE is optional (column 5)
+			if len(record) >= 5 {
+				entry.CVE = strings.TrimSpace(record[4])
+			}
 		}
 
 		entries = append(entries, entry)
@@ -67,6 +90,34 @@ func LoadBlocklist(path string) (*Blocklist, error) {
 		Entries: entries,
 		Index:   index,
 	}, nil
+}
+
+// parseWizEntry parses a Wiz format CSV entry
+// Format: "package-name", "= version" or "= v1 || = v2"
+func parseWizEntry(record []string) BlocklistEntry {
+	packageName := strings.TrimSpace(record[0])
+	versionStr := strings.TrimSpace(record[1])
+
+	// Remove "=" prefix and parse version
+	// Handle "= 0.0.7" or "= 3.12.5 || = 3.12.6"
+	versionStr = strings.TrimPrefix(versionStr, "=")
+	versionStr = strings.TrimSpace(versionStr)
+
+	// For now, take the first version if multiple are specified
+	if strings.Contains(versionStr, "||") {
+		parts := strings.Split(versionStr, "||")
+		versionStr = strings.TrimSpace(parts[0])
+		versionStr = strings.TrimPrefix(versionStr, "=")
+		versionStr = strings.TrimSpace(versionStr)
+	}
+
+	return BlocklistEntry{
+		PackageName: packageName,
+		Version:     versionStr,
+		Severity:    SeverityCritical, // Wiz lists are all compromised packages
+		Reason:      "Compromised package (Shai-Hulud attack)",
+		CVE:         "",
+	}
 }
 
 // IsBlocked checks if a specific package version is in the blocklist

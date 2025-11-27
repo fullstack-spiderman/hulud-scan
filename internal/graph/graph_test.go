@@ -10,7 +10,7 @@ import (
 
 func TestBuildGraph_Simple(t *testing.T) {
 	// Arrange - Parse our test lockfile
-	lockfilePath := "../../testdata/sample-project/package-lock.json"
+	lockfilePath := "../../testdata/npm-project/package-lock.json"
 	lockfile, err := parser.ParseLockfile(lockfilePath)
 	require.NoError(t, err)
 
@@ -77,7 +77,7 @@ func TestBuildGraph_EmptyLockfile(t *testing.T) {
 
 func TestFindDependencyPath(t *testing.T) {
 	// Arrange
-	lockfilePath := "../../testdata/sample-project/package-lock.json"
+	lockfilePath := "../../testdata/npm-project/package-lock.json"
 	lockfile, err := parser.ParseLockfile(lockfilePath)
 	require.NoError(t, err)
 
@@ -99,7 +99,7 @@ func TestFindDependencyPath(t *testing.T) {
 
 func TestFindDependencyPath_DirectDependency(t *testing.T) {
 	// Test path to a direct dependency
-	lockfilePath := "../../testdata/sample-project/package-lock.json"
+	lockfilePath := "../../testdata/npm-project/package-lock.json"
 	lockfile, err := parser.ParseLockfile(lockfilePath)
 	require.NoError(t, err)
 

@@ -16,8 +16,9 @@ import (
 var scanCmd = &cobra.Command{
 	Use:   "scan [path]",
 	Short: "Scan a project for compromised dependencies",
-	Long: `Scan analyzes the package-lock.json file in the specified directory
-and checks for known compromised packages and suspicious lifecycle scripts.`,
+	Long: `Scan automatically detects and analyzes the lockfile (package-lock.json,
+yarn.lock, pnpm-lock.yaml, or bun.lockb) in the specified directory and checks
+for known compromised packages and suspicious lifecycle scripts.`,
 	Args: cobra.MaximumNArgs(1), // Accept 0 or 1 arguments
 	Run: func(cmd *cobra.Command, args []string) {
 		// This function runs when the command is executed
@@ -63,22 +64,15 @@ func init() {
 
 // runScan performs the actual scanning logic
 func runScan(projectPath string, cmd *cobra.Command) error {
-	// Find package-lock.json in the project directory
-	lockfilePath := filepath.Join(projectPath, "package-lock.json")
+	// Auto-detect and parse lockfile
+	fmt.Printf("🔎 Detecting lockfile in: %s\n", projectPath)
 
-	// Check if file exists
-	if _, err := os.Stat(lockfilePath); os.IsNotExist(err) {
-		return fmt.Errorf("package-lock.json not found in %s", projectPath)
-	}
-
-	fmt.Printf("📄 Parsing lockfile: %s\n", lockfilePath)
-
-	// Parse the lockfile
-	lockfile, err := parser.ParseLockfile(lockfilePath)
+	lockfile, lockfileInfo, err := parser.ParseAuto(projectPath)
 	if err != nil {
 		return fmt.Errorf("failed to parse lockfile: %w", err)
 	}
 
+	fmt.Printf("📄 Detected: %s\n", lockfileInfo.Type.String())
 	fmt.Printf("✅ Found %d packages\n", len(lockfile.Packages))
 	fmt.Printf("Project: %s@%s\n", lockfile.Name, lockfile.Version)
 

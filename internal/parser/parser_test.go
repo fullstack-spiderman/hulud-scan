@@ -9,7 +9,7 @@ import (
 
 func TestParseLockfile_Simple(t *testing.T) {
 	// Arrange - Setup test data
-	lockfilePath := "../../testdata/sample-project/package-lock.json"
+	lockfilePath := "../../testdata/npm-project/package-lock.json"
 
 	// Act - Execute the function we're testing
 	lockfile, err := ParseLockfile(lockfilePath)

@@ -2,7 +2,7 @@
 
 > Supply-chain security scanner for JavaScript/TypeScript projects
 
-[![Go Version](https://img.shields.io/badge/Go-1.21+-00ADD8?style=flat&logo=go)](https://go.dev) [![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE) ![Tests](https://img.shields.io/badge/tests-40%20passing-brightgreen) ![Coverage](https://img.shields.io/badge/coverage-80%25-green)
+[![Go Version](https://img.shields.io/badge/Go-1.21+-00ADD8?style=flat&logo=go)](https://go.dev) [![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE) [![Test](https://github.com/fullstack-spiderman/hulud-scan/actions/workflows/test.yml/badge.svg)](https://github.com/fullstack-spiderman/hulud-scan/actions/workflows/test.yml) [![Build](https://github.com/fullstack-spiderman/hulud-scan/actions/workflows/build.yml/badge.svg)](https://github.com/fullstack-spiderman/hulud-scan/actions/workflows/build.yml) [![Release](https://github.com/fullstack-spiderman/hulud-scan/actions/workflows/release.yml/badge.svg)](https://github.com/fullstack-spiderman/hulud-scan/actions/workflows/release.yml)
 
 **hulud-scan** is an open-source CLI tool that detects compromised packages and supply-chain attacks in JavaScript/TypeScript projects by scanning lockfiles and comparing against known blocklists.
 

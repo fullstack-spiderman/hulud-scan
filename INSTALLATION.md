@@ -92,7 +92,7 @@ brew untap fullstack-spiderman/tap
 
 ```powershell
 # Add the bucket
-scoop bucket add hulud-scan https://github.com/fullstack-spiderman/scoop-bucket
+scoop bucket add fullstack-spiderman https://github.com/fullstack-spiderman/scoop-bucket
 
 # Install hulud-scan
 scoop install hulud-scan

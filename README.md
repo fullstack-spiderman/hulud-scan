@@ -124,7 +124,7 @@ brew install fullstack-spiderman/tap/hulud-scan
 **Windows (Scoop):**
 
 ```powershell
-scoop bucket add hulud-scan https://github.com/fullstack-spiderman/scoop-bucket
+scoop bucket add fullstack-spiderman https://github.com/fullstack-spiderman/scoop-bucket
 scoop install hulud-scan
 ```
 

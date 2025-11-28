@@ -76,8 +76,6 @@ func calculateDepth(graph *Graph, lockfile *parser.Lockfile) {
 		depth int
 	}
 
-	queue := []queueItem{}
-
 	// Find all direct dependencies by looking at root project's dependencies
 	// In package-lock.json v3, the root package has empty string key with dependencies
 	// But we're building from our Root node, so we need to find which packages
@@ -111,7 +109,6 @@ func calculateDepth(graph *Graph, lockfile *parser.Lockfile) {
 
 	// Initialize: all packages start at depth -1
 	// Root is depth 0
-	queue = append(queue, queueItem{node: graph.Root, depth: 0})
 	visited := make(map[*Node]bool)
 
 	// We need to connect root to its direct dependencies
@@ -141,7 +138,7 @@ func calculateDepth(graph *Graph, lockfile *parser.Lockfile) {
 	}
 
 	// Now calculate depth for transitive dependencies using BFS
-	queue = []queueItem{{node: graph.Root, depth: 0}}
+	queue := []queueItem{{node: graph.Root, depth: 0}}
 	visited[graph.Root] = true
 
 	for len(queue) > 0 {

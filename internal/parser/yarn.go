@@ -15,7 +15,11 @@ func ParseYarnLock(lockfilePath string) (*Lockfile, error) {
 	if err != nil {
 		return nil, fmt.Errorf("failed to open yarn.lock: %w", err)
 	}
-	defer file.Close()
+	defer func() {
+		if closeErr := file.Close(); closeErr != nil {
+			fmt.Printf("Warning: failed to close file: %v\n", closeErr)
+		}
+	}()
 
 	lockfile := &Lockfile{
 		Name:               extractProjectNameFromPath(lockfilePath),

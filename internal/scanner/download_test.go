@@ -19,7 +19,7 @@ func TestDownloadBlocklist(t *testing.T) {
 lodash,= 4.17.20
 express,= 4.17.1`
 		w.WriteHeader(http.StatusOK)
-		w.Write([]byte(csv))
+		_, _ = w.Write([]byte(csv))
 	}))
 	defer server.Close()
 
@@ -42,7 +42,7 @@ func TestDownloadBlocklist_FullFormat(t *testing.T) {
 lodash,4.17.20,critical,Prototype pollution,CVE-2020-8203
 express,4.17.1,high,DoS vulnerability,CVE-2022-24999`
 		w.WriteHeader(http.StatusOK)
-		w.Write([]byte(csv))
+		_, _ = w.Write([]byte(csv))
 	}))
 	defer server.Close()
 
@@ -109,7 +109,7 @@ func TestLoadOrDownloadBlocklist_WithCaching(t *testing.T) {
 	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		csv := `Package,Version
 test-package,= 1.0.0`
-		w.Write([]byte(csv))
+		_, _ = w.Write([]byte(csv))
 	}))
 	defer server.Close()
 
@@ -138,7 +138,7 @@ func TestLoadOrDownloadBlocklist_CacheExpiry(t *testing.T) {
 		downloadCount++
 		csv := `Package,Version
 test,= 1.0.0`
-		w.Write([]byte(csv))
+		_, _ = w.Write([]byte(csv))
 	}))
 	defer server.Close()
 
@@ -154,7 +154,7 @@ test,= 1.0.0`
 
 	// Modify cache file timestamp to make it expired
 	oldTime := time.Now().Add(-2 * time.Hour)
-	os.Chtimes(cacheFile, oldTime, oldTime)
+	_ = os.Chtimes(cacheFile, oldTime, oldTime)
 
 	// Second load - should re-download due to expiry
 	_, err = LoadOrDownloadBlocklist(server.URL, tmpDir)

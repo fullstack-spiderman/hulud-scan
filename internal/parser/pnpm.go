@@ -121,7 +121,10 @@ func parsePNPMLockfileVersion(version interface{}) int {
 	case string:
 		// Try to parse as int
 		var result int
-		fmt.Sscanf(v, "%d", &result)
+		if _, err := fmt.Sscanf(v, "%d", &result); err != nil {
+			// If parsing fails, return 0 as default
+			return 0
+		}
 		return result
 	default:
 		return 0

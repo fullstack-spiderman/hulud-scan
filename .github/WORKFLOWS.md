@@ -187,11 +187,11 @@ docker run --rm -v $(pwd):/app ghcr.io/arjunu/hulud-scan:latest scan /app
 Add these to your README.md:
 
 ```markdown
-![Test](https://github.com/arjunu/hulud-scan/actions/workflows/test.yml/badge.svg)
-![Build](https://github.com/arjunu/hulud-scan/actions/workflows/build.yml/badge.svg)
-![Release](https://github.com/arjunu/hulud-scan/actions/workflows/release.yml/badge.svg)
-![Docker](https://github.com/arjunu/hulud-scan/actions/workflows/docker.yml/badge.svg)
-![CodeQL](https://github.com/arjunu/hulud-scan/actions/workflows/codeql.yml/badge.svg)
+![Test](https://github.com/fullstack-spiderman/hulud-scan/actions/workflows/test.yml/badge.svg)
+![Build](https://github.com/fullstack-spiderman/hulud-scan/actions/workflows/build.yml/badge.svg)
+![Release](https://github.com/fullstack-spiderman/hulud-scan/actions/workflows/release.yml/badge.svg)
+![Docker](https://github.com/fullstack-spiderman/hulud-scan/actions/workflows/docker.yml/badge.svg)
+![CodeQL](https://github.com/fullstack-spiderman/hulud-scan/actions/workflows/codeql.yml/badge.svg)
 ```
 
 ---
@@ -228,7 +228,7 @@ git tag -a v1.0.0 -m "Release v1.0.0
 git push origin v1.0.0
 
 # 4. Workflow runs automatically!
-# Check: https://github.com/arjunu/hulud-scan/actions
+# Check: https://github.com/fullstack-spiderman/hulud-scan/actions
 ```
 
 ### Option 2: Manual Workflow Dispatch

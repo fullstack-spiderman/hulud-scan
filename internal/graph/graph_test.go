@@ -3,7 +3,7 @@ package graph
 import (
 	"testing"
 
-	"github.com/arjunu/hulud-scan/internal/parser"
+	"github.com/fullstack-spiderman/hulud-scan/internal/parser"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )

@@ -22,7 +22,7 @@ We take the security of hulud-scan seriously. If you believe you have found a se
 
 **Report security vulnerabilities via GitHub Security Advisories:**
 
-1. Go to the [Security tab](https://github.com/arjunu/hulud-scan/security)
+1. Go to the [Security tab](https://github.com/fullstack-spiderman/hulud-scan/security)
 2. Click "Report a vulnerability"
 3. Fill out the form with details
 
@@ -67,15 +67,15 @@ Please include the following information:
    hulud-scan --version
 
    # Update to latest
-   go install github.com/arjunu/hulud-scan@latest
+   go install github.com/fullstack-spiderman/hulud-scan@latest
    ```
 
 2. **Verify checksums when downloading binaries**
 
    ```bash
    # Download and verify
-   curl -L https://github.com/arjunu/hulud-scan/releases/download/v1.0.0/hulud-scan-linux-amd64 -o hulud-scan
-   curl -L https://github.com/arjunu/hulud-scan/releases/download/v1.0.0/hulud-scan-linux-amd64.sha256 -o hulud-scan.sha256
+   curl -L https://github.com/fullstack-spiderman/hulud-scan/releases/download/v1.0.0/hulud-scan-linux-amd64 -o hulud-scan
+   curl -L https://github.com/fullstack-spiderman/hulud-scan/releases/download/v1.0.0/hulud-scan-linux-amd64.sha256 -o hulud-scan.sha256
    sha256sum -c hulud-scan.sha256
    ```
 
@@ -149,7 +149,7 @@ Our CI/CD pipeline runs:
 - **govulncheck** - Go vulnerability database checker
 - **Dependabot** - Automated dependency updates
 
-View our [Security Advisories](https://github.com/arjunu/hulud-scan/security/advisories) for any past issues.
+View our [Security Advisories](https://github.com/fullstack-spiderman/hulud-scan/security/advisories) for any past issues.
 
 ## Bug Bounty Program
 

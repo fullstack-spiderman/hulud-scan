@@ -1,6 +1,6 @@
 package scanner
 
-import "github.com/arjunu/hulud-scan/internal/graph"
+import "github.com/fullstack-spiderman/hulud-scan/internal/graph"
 
 // Severity levels for security findings
 type Severity string

@@ -35,7 +35,7 @@ git clone https://github.com/YOUR_USERNAME/hulud-scan.git
 cd hulud-scan
 
 # 3. Add upstream remote
-git remote add upstream https://github.com/arjunu/hulud-scan.git
+git remote add upstream https://github.com/fullstack-spiderman/hulud-scan.git
 
 # 4. Create a branch for your changes
 git checkout -b feature/my-new-feature

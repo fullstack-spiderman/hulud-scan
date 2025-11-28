@@ -106,37 +106,35 @@ release:
 
     **Full Changelog**: https://github.com/fullstack-spiderman/hulud-scan/compare/{{.PreviousTag}}...{{.Tag}}
 
-# Homebrew tap (will create formula in homebrew-tap repo)
-# Disabled for now - requires PAT with repo permissions
-# To enable: Create PAT, add as HOMEBREW_TAP_GITHUB_TOKEN secret
-# brews:
-#   - name: hulud-scan
-#     repository:
-#       owner: fullstack-spiderman
-#       name: homebrew-tap
-#       token: "{{ .Env.HOMEBREW_TAP_GITHUB_TOKEN }}"
-#     directory: Formula
-#     homepage: https://github.com/fullstack-spiderman/hulud-scan
-#     description: Supply-chain security scanner for JavaScript/TypeScript projects
-#     license: MIT
-#     test: |
-#       system "#{bin}/hulud-scan", "version"
-#     install: |
-#       bin.install "hulud-scan"
+# Homebrew tap (creates formula in homebrew-tap repo)
+# Requires: HOMEBREW_TAP_GITHUB_TOKEN secret with repo permissions
+brews:
+  - name: hulud-scan
+    repository:
+      owner: fullstack-spiderman
+      name: homebrew-tap
+      token: "{{ .Env.HOMEBREW_TAP_GITHUB_TOKEN }}"
+    directory: Formula
+    homepage: https://github.com/fullstack-spiderman/hulud-scan
+    description: Supply-chain security scanner for JavaScript/TypeScript projects
+    license: MIT
+    test: |
+      system "#{bin}/hulud-scan", "version"
+    install: |
+      bin.install "hulud-scan"
 
 # Scoop manifest for Windows
-# Disabled for now - requires PAT with repo permissions
-# To enable: Create PAT, add as SCOOP_BUCKET_GITHUB_TOKEN secret
-# scoops:
-#   - name: hulud-scan
-#     repository:
-#       owner: fullstack-spiderman
-#       name: scoop-bucket
-#       token: "{{ .Env.SCOOP_BUCKET_GITHUB_TOKEN }}"
-#     directory: bucket
-#     homepage: https://github.com/fullstack-spiderman/hulud-scan
-#     description: Supply-chain security scanner for JavaScript/TypeScript projects
-#     license: MIT
+# Requires: SCOOP_BUCKET_GITHUB_TOKEN secret with repo permissions
+scoops:
+  - name: hulud-scan
+    repository:
+      owner: fullstack-spiderman
+      name: scoop-bucket
+      token: "{{ .Env.SCOOP_BUCKET_GITHUB_TOKEN }}"
+    directory: bucket
+    homepage: https://github.com/fullstack-spiderman/hulud-scan
+    description: Supply-chain security scanner for JavaScript/TypeScript projects
+    license: MIT
 
 # Docker images
 dockers:

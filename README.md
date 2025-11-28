@@ -113,9 +113,20 @@ cd hulud-scan
 go build -o hulud-scan
 ```
 
-### Option 3: Package Managers (Coming Soon)
+### Option 3: Package Managers
 
-🚧 Homebrew (macOS) and Scoop (Windows) support planned for future releases.
+**macOS (Homebrew):**
+
+```bash
+brew install fullstack-spiderman/tap/hulud-scan
+```
+
+**Windows (Scoop):**
+
+```powershell
+scoop bucket add hulud-scan https://github.com/fullstack-spiderman/scoop-bucket
+scoop install hulud-scan
+```
 
 ---
 

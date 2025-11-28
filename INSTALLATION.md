@@ -60,6 +60,62 @@ sudo apt install golang-go
 
 ## Installation
 
+### Package Managers
+
+#### macOS - Homebrew
+
+```bash
+# Add the tap
+brew tap fullstack-spiderman/tap
+
+# Install hulud-scan
+brew install hulud-scan
+
+# Verify installation
+hulud-scan --version
+```
+
+**Update:**
+
+```bash
+brew upgrade hulud-scan
+```
+
+**Uninstall:**
+
+```bash
+brew uninstall hulud-scan
+brew untap fullstack-spiderman/tap
+```
+
+#### Windows - Scoop
+
+```powershell
+# Add the bucket
+scoop bucket add hulud-scan https://github.com/fullstack-spiderman/scoop-bucket
+
+# Install hulud-scan
+scoop install hulud-scan
+
+# Verify installation
+hulud-scan --version
+```
+
+**Update:**
+
+```powershell
+scoop update hulud-scan
+```
+
+**Uninstall:**
+
+```powershell
+scoop uninstall hulud-scan
+scoop bucket rm hulud-scan
+```
+
+---
+
 ### macOS
 
 #### Option 1: Prebuilt Binary (Recommended - No Go Required!)

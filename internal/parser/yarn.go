@@ -119,18 +119,18 @@ func ParseYarnLock(lockfilePath string) (*Lockfile, error) {
 	}
 
 	// Try to read package.json for project name and direct dependencies
-	if err := enrichFromPackageJSON(lockfilePath, lockfile); err != nil {
-		// Non-fatal, continue without enrichment
-	}
+	// Error is non-fatal, continue without enrichment
+	_ = enrichFromPackageJSON(lockfilePath, lockfile)
 
 	return lockfile, nil
 }
 
 // extractPackageNameFromSpec extracts package name from yarn spec
 // Examples:
-//   "lodash@^4.17.20" -> "lodash"
-//   "@babel/core@^7.0.0" -> "@babel/core"
-//   "package@npm:other@1.0.0" -> "package"
+//
+//	"lodash@^4.17.20" -> "lodash"
+//	"@babel/core@^7.0.0" -> "@babel/core"
+//	"package@npm:other@1.0.0" -> "package"
 func extractPackageNameFromSpec(spec string) string {
 	// Remove quotes
 	spec = strings.Trim(spec, "\"'")

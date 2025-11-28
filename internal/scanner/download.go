@@ -26,7 +26,7 @@ func DownloadBlocklist(url string) (*Blocklist, error) {
 	if err != nil {
 		return nil, fmt.Errorf("failed to download blocklist: %w", err)
 	}
-	defer resp.Body.Close()
+	defer func() { _ = resp.Body.Close() }()
 
 	if resp.StatusCode != http.StatusOK {
 		return nil, fmt.Errorf("failed to download blocklist: HTTP %d", resp.StatusCode)

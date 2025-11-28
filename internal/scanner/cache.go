@@ -57,7 +57,7 @@ func saveToCache(url string, cacheDir string, blocklist *Blocklist) error {
 	if err != nil {
 		return fmt.Errorf("failed to create cache file: %w", err)
 	}
-	defer file.Close()
+	defer func() { _ = file.Close() }()
 
 	writer := csv.NewWriter(file)
 	defer writer.Flush()

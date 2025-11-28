@@ -22,7 +22,7 @@ for known compromised packages and suspicious lifecycle scripts.`,
 	Args: cobra.MaximumNArgs(1), // Accept 0 or 1 arguments
 	Run: func(cmd *cobra.Command, args []string) {
 		// This function runs when the command is executed
-		path := "."  // Default to current directory
+		path := "." // Default to current directory
 		if len(args) > 0 {
 			path = args[0]
 		}

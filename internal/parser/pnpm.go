@@ -72,18 +72,17 @@ func ParsePNPMLock(lockfilePath string) (*Lockfile, error) {
 		lockfile.Packages[nodePath] = pkg
 	}
 
-	// Enrich from package.json
-	if err := enrichFromPackageJSON(lockfilePath, lockfile); err != nil {
-		// Non-fatal
-	}
+	// Enrich from package.json (error is non-fatal)
+	_ = enrichFromPackageJSON(lockfilePath, lockfile)
 
 	return lockfile, nil
 }
 
 // extractPNPMPackageInfo extracts package name and version from pnpm path
 // Examples:
-//   "/lodash/4.17.21" -> "lodash", "4.17.21"
-//   "/@babel/core/7.20.0" -> "@babel/core", "7.20.0"
+//
+//	"/lodash/4.17.21" -> "lodash", "4.17.21"
+//	"/@babel/core/7.20.0" -> "@babel/core", "7.20.0"
 func extractPNPMPackageInfo(pkgPath string) (name string, version string) {
 	// Remove leading slash
 	pkgPath = strings.TrimPrefix(pkgPath, "/")
@@ -121,7 +120,7 @@ func parsePNPMLockfileVersion(version interface{}) int {
 	case string:
 		// Try to parse as int
 		var result int
-		fmt.Sscanf(v, "%d", &result)
+		_, _ = fmt.Sscanf(v, "%d", &result)
 		return result
 	default:
 		return 0

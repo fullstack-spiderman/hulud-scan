@@ -16,7 +16,7 @@ func LoadBlocklist(path string) (*Blocklist, error) {
 	if err != nil {
 		return nil, fmt.Errorf("failed to open blocklist file: %w", err)
 	}
-	defer file.Close() // Close file when function returns
+	defer func() { _ = file.Close() }()
 
 	// Create CSV reader
 	reader := csv.NewReader(file)

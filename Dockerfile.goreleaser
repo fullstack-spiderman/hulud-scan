@@ -1,0 +1,20 @@
+# Dockerfile for GoReleaser - uses pre-built binary
+FROM alpine:latest
+
+# Install ca-certificates for HTTPS
+RUN apk --no-cache add ca-certificates
+
+WORKDIR /app
+
+# Copy pre-built binary (provided by GoReleaser)
+COPY hulud-scan /usr/local/bin/hulud-scan
+
+# Create non-root user
+RUN addgroup -g 1000 hulud && \
+    adduser -D -u 1000 -G hulud hulud
+
+USER hulud
+
+# Default command
+ENTRYPOINT ["hulud-scan"]
+CMD ["--help"]

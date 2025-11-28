@@ -144,7 +144,7 @@ dockers:
       - "--label=org.opencontainers.image.created={{ .Date }}"
       - "--label=org.opencontainers.image.revision={{ .FullCommit }}"
       - "--label=org.opencontainers.image.source=https://github.com/fullstack-spiderman/hulud-scan"
-    dockerfile: Dockerfile
+    dockerfile: Dockerfile.goreleaser
 
   - image_templates:
       - "ghcr.io/fullstack-spiderman/hulud-scan:{{ .Version }}-arm64"
@@ -158,7 +158,7 @@ dockers:
       - "--label=org.opencontainers.image.created={{ .Date }}"
       - "--label=org.opencontainers.image.revision={{ .FullCommit }}"
       - "--label=org.opencontainers.image.source=https://github.com/fullstack-spiderman/hulud-scan"
-    dockerfile: Dockerfile
+    dockerfile: Dockerfile.goreleaser
 
 docker_manifests:
   - name_template: ghcr.io/fullstack-spiderman/hulud-scan:{{ .Version }}

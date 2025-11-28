@@ -10,7 +10,7 @@ import (
 
 func TestBuildGraph_Simple(t *testing.T) {
 	// Arrange - Parse our test lockfile
-	lockfilePath := "../../testdata/npm-project/package-lock.json"
+	lockfilePath := "../../testdata/npm/clean/package-lock.json"
 	lockfile, err := parser.ParseLockfile(lockfilePath)
 	require.NoError(t, err)
 
@@ -23,12 +23,12 @@ func TestBuildGraph_Simple(t *testing.T) {
 
 	// Check root node
 	require.NotNil(t, graph.Root)
-	assert.Equal(t, "test-project", graph.Root.Package.Name)
+	assert.Equal(t, "test-clean", graph.Root.Package.Name)
 	assert.Equal(t, 0, graph.Root.Depth, "Root should have depth 0")
 
 	// Check that nodes were created for all packages
-	// We have 3 packages in our test file
-	assert.Len(t, graph.Nodes, 3, "Should have 3 nodes")
+	// We have 4 packages in our clean test file (lodash, axios, follow-redirects, form-data)
+	assert.Len(t, graph.Nodes, 4, "Should have 4 nodes")
 
 	// Check that direct dependencies exist and are marked correctly
 	lodashNode := graph.Nodes["node_modules/lodash"]
@@ -37,25 +37,11 @@ func TestBuildGraph_Simple(t *testing.T) {
 	assert.True(t, lodashNode.IsDirect, "lodash should be marked as direct dependency")
 	assert.Equal(t, 1, lodashNode.Depth, "Direct dependencies should have depth 1")
 
-	expressNode := graph.Nodes["node_modules/express"]
-	require.NotNil(t, expressNode, "express node should exist")
-	assert.Equal(t, "express", expressNode.Package.Name)
-	assert.True(t, expressNode.IsDirect, "express should be marked as direct dependency")
-	assert.Equal(t, 1, expressNode.Depth)
-
-	// Check transitive dependency
-	bodyParserNode := graph.Nodes["node_modules/body-parser"]
-	require.NotNil(t, bodyParserNode, "body-parser node should exist")
-	assert.Equal(t, "body-parser", bodyParserNode.Package.Name)
-	assert.False(t, bodyParserNode.IsDirect, "body-parser should NOT be direct dependency")
-	assert.Equal(t, 2, bodyParserNode.Depth, "Transitive dependencies should have depth > 1")
-
-	// Check that express has body-parser as a dependency
-	assert.Len(t, expressNode.Dependencies, 1, "express should have 1 dependency")
-	assert.Equal(t, bodyParserNode, expressNode.Dependencies[0], "express should depend on body-parser")
-
-	// Check that body-parser knows express depends on it
-	assert.Contains(t, bodyParserNode.Dependents, expressNode, "body-parser should list express as dependent")
+	axiosNode := graph.Nodes["node_modules/axios"]
+	require.NotNil(t, axiosNode, "axios node should exist")
+	assert.Equal(t, "axios", axiosNode.Package.Name)
+	assert.True(t, axiosNode.IsDirect, "axios should be marked as direct dependency")
+	assert.Equal(t, 1, axiosNode.Depth)
 }
 
 func TestBuildGraph_EmptyLockfile(t *testing.T) {
@@ -76,8 +62,8 @@ func TestBuildGraph_EmptyLockfile(t *testing.T) {
 }
 
 func TestFindDependencyPath(t *testing.T) {
-	// Arrange
-	lockfilePath := "../../testdata/npm-project/package-lock.json"
+	// Arrange - Use affected-transitive test data which has express -> body-parser
+	lockfilePath := "../../testdata/npm/affected-transitive/package-lock.json"
 	lockfile, err := parser.ParseLockfile(lockfilePath)
 	require.NoError(t, err)
 
@@ -92,14 +78,14 @@ func TestFindDependencyPath(t *testing.T) {
 
 	// Path should be: root -> express -> body-parser
 	assert.Len(t, path, 3, "Path should have 3 nodes")
-	assert.Equal(t, "test-project", path[0], "First should be root project")
+	assert.Equal(t, "test-affected-transitive", path[0], "First should be root project")
 	assert.Equal(t, "express", path[1], "Second should be express")
 	assert.Equal(t, "body-parser", path[2], "Last should be body-parser")
 }
 
 func TestFindDependencyPath_DirectDependency(t *testing.T) {
 	// Test path to a direct dependency
-	lockfilePath := "../../testdata/npm-project/package-lock.json"
+	lockfilePath := "../../testdata/npm/clean/package-lock.json"
 	lockfile, err := parser.ParseLockfile(lockfilePath)
 	require.NoError(t, err)
 
@@ -112,6 +98,6 @@ func TestFindDependencyPath_DirectDependency(t *testing.T) {
 	// Assert
 	require.NotNil(t, path)
 	assert.Len(t, path, 2, "Direct dependency path should have 2 nodes")
-	assert.Equal(t, "test-project", path[0])
+	assert.Equal(t, "test-clean", path[0])
 	assert.Equal(t, "lodash", path[1])
 }

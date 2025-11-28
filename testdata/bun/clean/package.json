@@ -1,0 +1,10 @@
+{
+  "name": "test-bun-clean",
+  "version": "1.0.0",
+  "description": "bun test with only safe packages",
+  "private": true,
+  "dependencies": {
+    "lodash": "4.17.21",
+    "axios": "1.6.0"
+  }
+}

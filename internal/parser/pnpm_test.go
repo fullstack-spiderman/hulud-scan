@@ -8,19 +8,19 @@ import (
 )
 
 func TestParsePNPMLock(t *testing.T) {
-	lockfilePath := "../../testdata/pnpm-project/pnpm-lock.yaml"
+	lockfilePath := "../../testdata/pnpm/clean/pnpm-lock.yaml"
 
 	lockfile, err := ParsePNPMLock(lockfilePath)
 	require.NoError(t, err)
 	require.NotNil(t, lockfile)
 
 	// Check project metadata
-	assert.Equal(t, "pnpm-test-project", lockfile.Name)
+	assert.Equal(t, "test-pnpm-clean", lockfile.Name)
 	assert.Equal(t, "1.0.0", lockfile.Version)
 	assert.Equal(t, 6, lockfile.LockfileVersion)
 
 	// Check packages
-	assert.Len(t, lockfile.Packages, 3)
+	assert.Len(t, lockfile.Packages, 4, "Should have 4 packages: lodash, axios, follow-redirects, form-data")
 
 	// Check lodash
 	lodashPkg := lockfile.Packages["node_modules/lodash"]
@@ -29,18 +29,19 @@ func TestParsePNPMLock(t *testing.T) {
 	assert.Equal(t, "4.17.21", lodashPkg.Version)
 	assert.NotEmpty(t, lodashPkg.Integrity)
 
-	// Check express
-	expressPkg := lockfile.Packages["node_modules/express"]
-	require.NotNil(t, expressPkg)
-	assert.Equal(t, "express", expressPkg.Name)
-	assert.Equal(t, "4.18.2", expressPkg.Version)
-	assert.NotEmpty(t, expressPkg.Dependencies)
-	assert.Contains(t, expressPkg.Dependencies, "body-parser")
+	// Check axios
+	axiosPkg := lockfile.Packages["node_modules/axios"]
+	require.NotNil(t, axiosPkg)
+	assert.Equal(t, "axios", axiosPkg.Name)
+	assert.Equal(t, "1.6.0", axiosPkg.Version)
+	assert.NotEmpty(t, axiosPkg.Dependencies)
+	assert.Contains(t, axiosPkg.Dependencies, "follow-redirects")
+	assert.Contains(t, axiosPkg.Dependencies, "form-data")
 
 	// Check direct dependencies
 	assert.Len(t, lockfile.DirectDependencies, 2)
 	assert.Contains(t, lockfile.DirectDependencies, "lodash")
-	assert.Contains(t, lockfile.DirectDependencies, "express")
+	assert.Contains(t, lockfile.DirectDependencies, "axios")
 }
 
 func TestExtractPNPMPackageInfo(t *testing.T) {

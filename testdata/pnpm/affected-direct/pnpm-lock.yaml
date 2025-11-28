@@ -1,0 +1,23 @@
+lockfileVersion: '6.0'
+
+settings:
+  autoInstallPeers: true
+  excludeLinksFromLockfile: false
+
+dependencies:
+  02-echo:
+    specifier: 0.0.7
+    version: 0.0.7
+  lodash:
+    specifier: 4.17.21
+    version: 4.17.21
+
+packages:
+  /02-echo/0.0.7:
+    resolution: {integrity: sha512-MOCK-INTEGRITY-HASH}
+    hasBin: true
+    dev: false
+
+  /lodash/4.17.21:
+    resolution: {integrity: sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg==}
+    dev: false

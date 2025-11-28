@@ -1,0 +1,10 @@
+{
+  "name": "test-pnpm-affected-direct",
+  "version": "1.0.0",
+  "description": "pnpm test with compromised direct dependency",
+  "private": true,
+  "dependencies": {
+    "02-echo": "0.0.7",
+    "lodash": "4.17.21"
+  }
+}

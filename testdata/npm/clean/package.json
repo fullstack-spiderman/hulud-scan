@@ -1,0 +1,10 @@
+{
+  "name": "test-clean",
+  "version": "1.0.0",
+  "description": "Test project with only safe packages",
+  "private": true,
+  "dependencies": {
+    "lodash": "4.17.21",
+    "axios": "1.6.0"
+  }
+}

@@ -8,19 +8,19 @@ import (
 )
 
 func TestParseYarnLock(t *testing.T) {
-	lockfilePath := "../../testdata/yarn-project/yarn.lock"
+	lockfilePath := "../../testdata/yarn/clean/yarn.lock"
 
 	lockfile, err := ParseYarnLock(lockfilePath)
 	require.NoError(t, err)
 	require.NotNil(t, lockfile)
 
 	// Check project metadata
-	assert.Equal(t, "yarn-test-project", lockfile.Name)
+	assert.Equal(t, "test-yarn-clean", lockfile.Name)
 	assert.Equal(t, "1.0.0", lockfile.Version)
 	assert.Equal(t, 1, lockfile.LockfileVersion)
 
 	// Check packages
-	assert.Len(t, lockfile.Packages, 3)
+	assert.Len(t, lockfile.Packages, 4, "Should have 4 packages: lodash, axios, follow-redirects, form-data")
 
 	// Check lodash
 	lodashPkg := lockfile.Packages["node_modules/lodash"]
@@ -30,18 +30,19 @@ func TestParseYarnLock(t *testing.T) {
 	assert.Contains(t, lodashPkg.Resolved, "lodash")
 	assert.NotEmpty(t, lodashPkg.Integrity)
 
-	// Check express
-	expressPkg := lockfile.Packages["node_modules/express"]
-	require.NotNil(t, expressPkg)
-	assert.Equal(t, "express", expressPkg.Name)
-	assert.Equal(t, "4.18.2", expressPkg.Version)
-	assert.NotEmpty(t, expressPkg.Dependencies)
-	assert.Contains(t, expressPkg.Dependencies, "body-parser")
+	// Check axios
+	axiosPkg := lockfile.Packages["node_modules/axios"]
+	require.NotNil(t, axiosPkg)
+	assert.Equal(t, "axios", axiosPkg.Name)
+	assert.Equal(t, "1.6.0", axiosPkg.Version)
+	assert.NotEmpty(t, axiosPkg.Dependencies)
+	assert.Contains(t, axiosPkg.Dependencies, "follow-redirects")
+	assert.Contains(t, axiosPkg.Dependencies, "form-data")
 
 	// Check direct dependencies
 	assert.Len(t, lockfile.DirectDependencies, 2)
 	assert.Contains(t, lockfile.DirectDependencies, "lodash")
-	assert.Contains(t, lockfile.DirectDependencies, "express")
+	assert.Contains(t, lockfile.DirectDependencies, "axios")
 }
 
 func TestExtractPackageNameFromSpec(t *testing.T) {

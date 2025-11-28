@@ -16,19 +16,19 @@ func TestDetectLockfile(t *testing.T) {
 	}{
 		{
 			name:         "detect npm lockfile",
-			projectPath:  "../../testdata/npm-project",
+			projectPath:  "../../testdata/npm/clean",
 			expectedType: LockfileTypeNPM,
 			shouldFail:   false,
 		},
 		{
 			name:         "detect yarn lockfile",
-			projectPath:  "../../testdata/yarn-project",
+			projectPath:  "../../testdata/yarn/clean",
 			expectedType: LockfileTypeYarn,
 			shouldFail:   false,
 		},
 		{
 			name:         "detect pnpm lockfile",
-			projectPath:  "../../testdata/pnpm-project",
+			projectPath:  "../../testdata/pnpm/clean",
 			expectedType: LockfileTypePNPM,
 			shouldFail:   false,
 		},
@@ -66,23 +66,23 @@ func TestParseAuto(t *testing.T) {
 	}{
 		{
 			name:             "parse npm project",
-			projectPath:      "../../testdata/npm-project",
-			expectedName:     "test-project",
-			expectedPackages: 3, // lodash, express, body-parser
+			projectPath:      "../../testdata/npm/clean",
+			expectedName:     "test-clean",
+			expectedPackages: 4, // lodash, axios, follow-redirects, form-data
 			shouldFail:       false,
 		},
 		{
 			name:             "parse yarn project",
-			projectPath:      "../../testdata/yarn-project",
-			expectedName:     "yarn-test-project",
-			expectedPackages: 3, // lodash, express, body-parser
+			projectPath:      "../../testdata/yarn/clean",
+			expectedName:     "test-yarn-clean",
+			expectedPackages: 4, // lodash, axios, follow-redirects, form-data
 			shouldFail:       false,
 		},
 		{
 			name:             "parse pnpm project",
-			projectPath:      "../../testdata/pnpm-project",
-			expectedName:     "pnpm-test-project",
-			expectedPackages: 3, // lodash, express, body-parser
+			projectPath:      "../../testdata/pnpm/clean",
+			expectedName:     "test-pnpm-clean",
+			expectedPackages: 4, // lodash, axios, follow-redirects, form-data
 			shouldFail:       false,
 		},
 		{

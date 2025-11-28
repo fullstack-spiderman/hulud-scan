@@ -9,7 +9,7 @@ import (
 
 func TestParseLockfile_Simple(t *testing.T) {
 	// Arrange - Setup test data
-	lockfilePath := "../../testdata/npm-project/package-lock.json"
+	lockfilePath := "../../testdata/npm/clean/package-lock.json"
 
 	// Act - Execute the function we're testing
 	lockfile, err := ParseLockfile(lockfilePath)
@@ -19,12 +19,13 @@ func TestParseLockfile_Simple(t *testing.T) {
 	require.NotNil(t, lockfile, "Lockfile should not be nil")
 
 	// Check basic metadata
-	assert.Equal(t, "test-project", lockfile.Name)
+	assert.Equal(t, "test-clean", lockfile.Name)
 	assert.Equal(t, "1.0.0", lockfile.Version)
 	assert.Equal(t, 3, lockfile.LockfileVersion)
 
 	// Check that packages were parsed
 	assert.NotEmpty(t, lockfile.Packages, "Packages map should not be empty")
+	assert.Len(t, lockfile.Packages, 4, "Should have 4 packages: lodash, axios, follow-redirects, form-data")
 
 	// Check specific packages exist
 	lodash := lockfile.Packages["node_modules/lodash"]
@@ -32,12 +33,12 @@ func TestParseLockfile_Simple(t *testing.T) {
 	assert.Equal(t, "lodash", lodash.Name)
 	assert.Equal(t, "4.17.21", lodash.Version)
 
-	express := lockfile.Packages["node_modules/express"]
-	require.NotNil(t, express, "express package should exist")
-	assert.Equal(t, "express", express.Name)
-	assert.Equal(t, "4.18.2", express.Version)
-	assert.Contains(t, express.Dependencies, "body-parser")
-	assert.Equal(t, "1.20.1", express.Dependencies["body-parser"])
+	axios := lockfile.Packages["node_modules/axios"]
+	require.NotNil(t, axios, "axios package should exist")
+	assert.Equal(t, "axios", axios.Name)
+	assert.Equal(t, "1.6.0", axios.Version)
+	assert.Contains(t, axios.Dependencies, "follow-redirects")
+	assert.Contains(t, axios.Dependencies, "form-data")
 }
 
 func TestParseLockfile_FileNotFound(t *testing.T) {

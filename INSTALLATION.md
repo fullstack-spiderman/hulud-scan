@@ -62,7 +62,7 @@ sudo apt install golang-go
 
 ```bash
 # 1. Clone the repository
-git clone <https://github.com/arjunu/hulud-scan.git>
+git clone <https://github.com/fullstack-spiderman/hulud-scan.git>
 cd hulud-scan
 
 # 2. Build the binary
@@ -79,7 +79,7 @@ hulud-scan --version
 
 ```bash
 # Install directly with Go
-go install github.com/arjunu/hulud-scan@latest
+go install github.com/fullstack-spiderman/hulud-scan@latest
 
 # The binary will be in ~/go/bin/hulud-scan
 # Add ~/go/bin to your PATH in ~/.zshrc or ~/.bash_profile:
@@ -113,7 +113,7 @@ sudo apt install git  # Ubuntu/Debian
 # sudo pacman -S git    # Arch
 
 # 2. Clone the repository
-git clone <https://github.com/arjunu/hulud-scan.git>
+git clone <https://github.com/fullstack-spiderman/hulud-scan.git>
 cd hulud-scan
 
 # 3. Build the binary
@@ -133,7 +133,7 @@ hulud-scan --version
 
 ```bash
 # Install directly
-go install github.com/arjunu/hulud-scan@latest
+go install github.com/fullstack-spiderman/hulud-scan@latest
 
 # Add Go bin to PATH (add to ~/.bashrc or ~/.zshrc)
 echo 'export PATH="$HOME/go/bin:$PATH"' >> ~/.bashrc
@@ -164,7 +164,7 @@ hulud-scan scan /home/user/my-project
 # Download from: <https://git-scm.com/download/win>
 
 # 2. Clone the repository
-git clone <https://github.com/arjunu/hulud-scan.git>
+git clone <https://github.com/fullstack-spiderman/hulud-scan.git>
 cd hulud-scan
 
 # 3. Build the binary
@@ -177,7 +177,7 @@ go build -o hulud-scan.exe
 
 ```powershell
 # Install directly
-go install github.com/arjunu/hulud-scan@latest
+go install github.com/fullstack-spiderman/hulud-scan@latest
 
 # The binary will be in: %USERPROFILE%\go\bin\hulud-scan.exe
 # Add to PATH if needed (System Properties > Environment Variables)
@@ -342,7 +342,7 @@ jobs:
           go-version: '1.21'
 
       - name: Install hulud-scan
-        run: go install github.com/arjunu/hulud-scan@latest
+        run: go install github.com/fullstack-spiderman/hulud-scan@latest
 
       - name: Scan dependencies
         run: hulud-scan scan .
@@ -353,7 +353,7 @@ jobs:
 security_scan:
   image: golang:1.21
   script:
-    - go install github.com/arjunu/hulud-scan@latest
+    - go install github.com/fullstack-spiderman/hulud-scan@latest
     - hulud-scan scan .
 ```
 
@@ -574,7 +574,7 @@ hulud-scan --version
 
 ## Support
 
-- **Issues**: <https://github.com/arjunu/hulud-scan/issues>
+- **Issues**: <https://github.com/fullstack-spiderman/hulud-scan/issues>
 - **Documentation**: See README.md and STATUS.md
 - **Examples**: See testdata/ directory
 

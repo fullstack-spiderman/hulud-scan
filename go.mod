@@ -1,4 +1,4 @@
-module github.com/arjunu/hulud-scan
+module github.com/fullstack-spiderman/hulud-scan
 
 go 1.21
 

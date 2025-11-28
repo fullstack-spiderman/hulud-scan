@@ -6,7 +6,7 @@ import (
 	"os"
 	"strings"
 
-	"github.com/arjunu/hulud-scan/internal/graph"
+	"github.com/fullstack-spiderman/hulud-scan/internal/graph"
 )
 
 // LoadBlocklist loads a blocklist from a CSV file

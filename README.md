@@ -51,10 +51,10 @@ Named after the Shai-Hulud attacks (2024-2025), this tool helps protect your pro
 
 ```bash
 # Install with Go
-go install github.com/arjunu/hulud-scan@latest
+go install github.com/fullstack-spiderman/hulud-scan@latest
 
 # Or build from source
-git clone https://github.com/arjunu/hulud-scan.git
+git clone https://github.com/fullstack-spiderman/hulud-scan.git
 cd hulud-scan
 go build -o hulud-scan
 ```
@@ -378,8 +378,8 @@ MIT License - see [LICENSE](LICENSE) file for details
 
 ## 🔗 Links
 
-- **GitHub**: <https://github.com/arjunu/hulud-scan>
-- **Issues**: <https://github.com/arjunu/hulud-scan/issues>
+- **GitHub**: <https://github.com/fullstack-spiderman/hulud-scan>
+- **Issues**: <https://github.com/fullstack-spiderman/hulud-scan/issues>
 - **Wiz Blocklist**: <https://github.com/wiz-sec-public/wiz-research-iocs>
 
 ---

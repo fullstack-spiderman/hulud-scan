@@ -1,0 +1,183 @@
+# GoReleaser configuration for hulud-scan
+# Documentation: https://goreleaser.com
+
+version: 2
+
+before:
+  hooks:
+    # Ensure dependencies are up to date
+    - go mod tidy
+    # Run tests before building
+    - go test ./...
+
+builds:
+  - id: hulud-scan
+    binary: hulud-scan
+    main: ./main.go
+    env:
+      - CGO_ENABLED=0
+    goos:
+      - linux
+      - darwin
+      - windows
+    goarch:
+      - amd64
+      - arm64
+    # Exclude invalid combinations
+    ignore:
+      - goos: windows
+        goarch: arm64
+    # Inject version info via ldflags
+    ldflags:
+      - -s -w
+      - -X main.Version={{.Version}}
+      - -X main.Commit={{.Commit}}
+      - -X main.Date={{.Date}}
+
+archives:
+  - id: hulud-scan-archive
+    name_template: >-
+      {{ .ProjectName }}_
+      {{- .Version }}_
+      {{- .Os }}_
+      {{- .Arch }}
+    files:
+      - LICENSE
+      - README.md
+      - CHANGELOG.md
+
+checksum:
+  name_template: 'checksums.txt'
+  algorithm: sha256
+
+changelog:
+  sort: asc
+  use: github
+  filters:
+    exclude:
+      - '^docs:'
+      - '^test:'
+      - '^chore:'
+      - typo
+      - Merge pull request
+      - Merge branch
+  groups:
+    - title: Features
+      regexp: "^.*feat[(\\w)]*:+.*$"
+      order: 0
+    - title: 'Bug fixes'
+      regexp: "^.*fix[(\\w)]*:+.*$"
+      order: 1
+    - title: 'Security'
+      regexp: "^.*sec[(\\w)]*:+.*$"
+      order: 2
+    - title: Others
+      order: 999
+
+release:
+  github:
+    owner: fullstack-spiderman
+    name: hulud-scan
+  draft: false
+  prerelease: auto
+  mode: replace
+  header: |
+    ## hulud-scan {{.Tag}}
+
+    Supply-chain security scanner for JavaScript/TypeScript projects.
+
+    ### Installation
+
+    #### Quick install (Linux/macOS):
+    ```bash
+    curl -sfL https://raw.githubusercontent.com/fullstack-spiderman/hulud-scan/main/install.sh | sh
+    ```
+
+    #### Manual download:
+    Download the appropriate binary for your platform below.
+
+  footer: |
+    ### Checksums
+    All binaries are checksummed for integrity verification.
+
+    **Full Changelog**: https://github.com/fullstack-spiderman/hulud-scan/compare/{{.PreviousTag}}...{{.Tag}}
+
+# Homebrew tap (will create formula in homebrew-tap repo)
+# Disabled for now - requires PAT with repo permissions
+# To enable: Create PAT, add as HOMEBREW_TAP_GITHUB_TOKEN secret
+# brews:
+#   - name: hulud-scan
+#     repository:
+#       owner: fullstack-spiderman
+#       name: homebrew-tap
+#       token: "{{ .Env.HOMEBREW_TAP_GITHUB_TOKEN }}"
+#     directory: Formula
+#     homepage: https://github.com/fullstack-spiderman/hulud-scan
+#     description: Supply-chain security scanner for JavaScript/TypeScript projects
+#     license: MIT
+#     test: |
+#       system "#{bin}/hulud-scan", "version"
+#     install: |
+#       bin.install "hulud-scan"
+
+# Scoop manifest for Windows
+# Disabled for now - requires PAT with repo permissions
+# To enable: Create PAT, add as SCOOP_BUCKET_GITHUB_TOKEN secret
+# scoops:
+#   - name: hulud-scan
+#     repository:
+#       owner: fullstack-spiderman
+#       name: scoop-bucket
+#       token: "{{ .Env.SCOOP_BUCKET_GITHUB_TOKEN }}"
+#     directory: bucket
+#     homepage: https://github.com/fullstack-spiderman/hulud-scan
+#     description: Supply-chain security scanner for JavaScript/TypeScript projects
+#     license: MIT
+
+# Docker images
+dockers:
+  - image_templates:
+      - "ghcr.io/fullstack-spiderman/hulud-scan:{{ .Version }}-amd64"
+      - "ghcr.io/fullstack-spiderman/hulud-scan:latest-amd64"
+    use: buildx
+    goarch: amd64
+    build_flag_templates:
+      - "--platform=linux/amd64"
+      - "--label=org.opencontainers.image.title={{ .ProjectName }}"
+      - "--label=org.opencontainers.image.version={{ .Version }}"
+      - "--label=org.opencontainers.image.created={{ .Date }}"
+      - "--label=org.opencontainers.image.revision={{ .FullCommit }}"
+      - "--label=org.opencontainers.image.source=https://github.com/fullstack-spiderman/hulud-scan"
+    dockerfile: Dockerfile.goreleaser
+
+  - image_templates:
+      - "ghcr.io/fullstack-spiderman/hulud-scan:{{ .Version }}-arm64"
+      - "ghcr.io/fullstack-spiderman/hulud-scan:latest-arm64"
+    use: buildx
+    goarch: arm64
+    build_flag_templates:
+      - "--platform=linux/arm64"
+      - "--label=org.opencontainers.image.title={{ .ProjectName }}"
+      - "--label=org.opencontainers.image.version={{ .Version }}"
+      - "--label=org.opencontainers.image.created={{ .Date }}"
+      - "--label=org.opencontainers.image.revision={{ .FullCommit }}"
+      - "--label=org.opencontainers.image.source=https://github.com/fullstack-spiderman/hulud-scan"
+    dockerfile: Dockerfile.goreleaser
+
+docker_manifests:
+  - name_template: ghcr.io/fullstack-spiderman/hulud-scan:{{ .Version }}
+    image_templates:
+      - ghcr.io/fullstack-spiderman/hulud-scan:{{ .Version }}-amd64
+      - ghcr.io/fullstack-spiderman/hulud-scan:{{ .Version }}-arm64
+
+  - name_template: ghcr.io/fullstack-spiderman/hulud-scan:latest
+    image_templates:
+      - ghcr.io/fullstack-spiderman/hulud-scan:latest-amd64
+      - ghcr.io/fullstack-spiderman/hulud-scan:latest-arm64
+
+# Announce releases (optional - you can configure later)
+# announce:
+#   slack:
+#     enabled: true
+#     message_template: 'hulud-scan {{ .Tag }} is out! Check it out: {{ .ReleaseURL }}'
+#     channel: '#releases'

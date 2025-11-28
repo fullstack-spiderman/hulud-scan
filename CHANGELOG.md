@@ -104,6 +104,6 @@ Copy this template for future releases:
 
 ## Links
 
-- [Releases](https://github.com/arjunu/hulud-scan/releases)
-- [Issues](https://github.com/arjunu/hulud-scan/issues)
-- [Pull Requests](https://github.com/arjunu/hulud-scan/pulls)
+- [Releases](https://github.com/fullstack-spiderman/hulud-scan/releases)
+- [Issues](https://github.com/fullstack-spiderman/hulud-scan/issues)
+- [Pull Requests](https://github.com/fullstack-spiderman/hulud-scan/pulls)

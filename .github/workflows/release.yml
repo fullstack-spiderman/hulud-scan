@@ -1,206 +1,40 @@
-# Release workflow - creates GitHub releases with multi-platform binaries
+# GoReleaser workflow - creates GitHub releases with multi-platform binaries
+# Handles: binaries, archives, checksums, changelog, Homebrew, Scoop, Docker
 name: Release
 
 on:
   push:
     tags:
       - 'v*.*.*'
-  workflow_dispatch:
-    inputs:
-      version:
-        description: 'Release version (e.g., v1.0.0)'
-        required: true
-        type: string
 
 permissions:
   contents: write
   packages: write
 
 jobs:
-  create-release:
-    name: Create Release
+  goreleaser:
+    name: Release with GoReleaser
     runs-on: ubuntu-latest
-    outputs:
-      upload_url: ${{ steps.create_release.outputs.upload_url }}
-      version: ${{ steps.get_version.outputs.version }}
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v6
         with:
           fetch-depth: 0
 
-      - name: Get version
-        id: get_version
-        run: |
-          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
-            echo "version=${{ inputs.version }}" >> $GITHUB_OUTPUT
-          else
-            echo "version=${GITHUB_REF#refs/tags/}" >> $GITHUB_OUTPUT
-          fi
-
-      - name: Generate changelog
-        id: changelog
-        run: |
-          # Simple changelog from commits since last tag
-          PREV_TAG=$(git describe --tags --abbrev=0 HEAD^ 2>/dev/null || echo "")
-          if [ -z "$PREV_TAG" ]; then
-            CHANGELOG=$(git log --pretty=format:"- %s" --no-merges)
-          else
-            CHANGELOG=$(git log ${PREV_TAG}..HEAD --pretty=format:"- %s" --no-merges)
-          fi
-          echo "changelog<<EOF" >> $GITHUB_OUTPUT
-          echo "$CHANGELOG" >> $GITHUB_OUTPUT
-          echo "EOF" >> $GITHUB_OUTPUT
-
-      - name: Create Release
-        id: create_release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: ${{ steps.get_version.outputs.version }}
-          release_name: Release ${{ steps.get_version.outputs.version }}
-          body: |
-            # hulud-scan ${{ steps.get_version.outputs.version }}
-
-            ## What's Changed
-            ${{ steps.changelog.outputs.changelog }}
-
-            ## Installation
-
-            ### macOS
-            ```bash
-            # Intel
-            curl -L https://github.com/${{ github.repository }}/releases/download/${{ steps.get_version.outputs.version }}/hulud-scan-darwin-amd64 -o hulud-scan
-            chmod +x hulud-scan
-            sudo mv hulud-scan /usr/local/bin/
-
-            # Apple Silicon
-            curl -L https://github.com/${{ github.repository }}/releases/download/${{ steps.get_version.outputs.version }}/hulud-scan-darwin-arm64 -o hulud-scan
-            chmod +x hulud-scan
-            sudo mv hulud-scan /usr/local/bin/
-            ```
-
-            ### Linux
-            ```bash
-            # AMD64
-            curl -L https://github.com/${{ github.repository }}/releases/download/${{ steps.get_version.outputs.version }}/hulud-scan-linux-amd64 -o hulud-scan
-            chmod +x hulud-scan
-            sudo mv hulud-scan /usr/local/bin/
-
-            # ARM64
-            curl -L https://github.com/${{ github.repository }}/releases/download/${{ steps.get_version.outputs.version }}/hulud-scan-linux-arm64 -o hulud-scan
-            chmod +x hulud-scan
-            sudo mv hulud-scan /usr/local/bin/
-            ```
-
-            ### Windows
-            Download `hulud-scan-windows-amd64.exe` and add to PATH.
-
-            ## Usage
-            ```bash
-            hulud-scan scan /path/to/project
-            ```
-
-            See [Installation Guide](https://github.com/${{ github.repository }}/blob/main/INSTALLATION.md) for details.
-          draft: false
-          prerelease: false
-
-  build-and-upload:
-    name: Build and Upload Assets
-    needs: create-release
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        include:
-          # macOS
-          - goos: darwin
-            goarch: amd64
-            name: hulud-scan-darwin-amd64
-          - goos: darwin
-            goarch: arm64
-            name: hulud-scan-darwin-arm64
-
-          # Linux
-          - goos: linux
-            goarch: amd64
-            name: hulud-scan-linux-amd64
-          - goos: linux
-            goarch: arm64
-            name: hulud-scan-linux-arm64
-
-          # Windows
-          - goos: windows
-            goarch: amd64
-            name: hulud-scan-windows-amd64.exe
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v6
+      - name: Fetch all tags
+        run: git fetch --force --tags
 
       - name: Set up Go
         uses: actions/setup-go@v6
         with:
-          go-version: '1.23'
+          go-version: '1.21'
           cache: true
 
-      - name: Build binary
-        env:
-          GOOS: ${{ matrix.goos }}
-          GOARCH: ${{ matrix.goarch }}
-          CGO_ENABLED: 0
-        run: |
-          VERSION="${{ needs.create-release.outputs.version }}"
-          go build -v \
-            -ldflags="-s -w -X main.Version=${VERSION} -X main.Commit=${GITHUB_SHA::8} -X main.Date=$(date -u +%Y-%m-%dT%H:%M:%SZ)" \
-            -o ${{ matrix.name }}
-
-      - name: Generate SHA256 checksum
-        run: |
-          if command -v sha256sum &> /dev/null; then
-            sha256sum ${{ matrix.name }} > ${{ matrix.name }}.sha256
-          else
-            shasum -a 256 ${{ matrix.name }} > ${{ matrix.name }}.sha256
-          fi
-
-      - name: Upload Release Asset
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ needs.create-release.outputs.upload_url }}
-          asset_path: ./${{ matrix.name }}
-          asset_name: ${{ matrix.name }}
-          asset_content_type: application/octet-stream
-
-      - name: Upload Checksum
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ needs.create-release.outputs.upload_url }}
-          asset_path: ./${{ matrix.name }}.sha256
-          asset_name: ${{ matrix.name }}.sha256
-          asset_content_type: text/plain
-
-  publish-docker:
-    name: Publish Docker Image
-    needs: create-release
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v6
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
-
-      - name: Log in to Docker Hub
-        uses: docker/login-action@v3
-        with:
-          username: ${{ secrets.DOCKER_USERNAME }}
-          password: ${{ secrets.DOCKER_PASSWORD }}
-        continue-on-error: true
 
       - name: Log in to GitHub Container Registry
         uses: docker/login-action@v3
@@ -209,25 +43,14 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Extract metadata
-        id: meta
-        uses: docker/metadata-action@v5
+      - name: Run GoReleaser
+        uses: goreleaser/goreleaser-action@v6
         with:
-          images: |
-            ghcr.io/${{ github.repository }}
-          tags: |
-            type=semver,pattern={{version}},value=${{ needs.create-release.outputs.version }}
-            type=semver,pattern={{major}}.{{minor}},value=${{ needs.create-release.outputs.version }}
-            type=semver,pattern={{major}},value=${{ needs.create-release.outputs.version }}
-            type=raw,value=latest
-
-      - name: Build and push
-        uses: docker/build-push-action@v5
-        with:
-          context: .
-          platforms: linux/amd64,linux/arm64
-          push: true
-          tags: ${{ steps.meta.outputs.tags }}
-          labels: ${{ steps.meta.outputs.labels }}
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
+          distribution: goreleaser
+          version: '~> v2'
+          args: release --clean
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # Optional: Uncomment when you create homebrew-tap and scoop-bucket repos
+          # HOMEBREW_TAP_GITHUB_TOKEN: ${{ secrets.HOMEBREW_TAP_GITHUB_TOKEN }}
+          # SCOOP_BUCKET_GITHUB_TOKEN: ${{ secrets.SCOOP_BUCKET_GITHUB_TOKEN }}

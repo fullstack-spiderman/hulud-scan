@@ -1,11 +1,11 @@
 blank_issues_enabled: false
 contact_links:
   - name: 💬 Discussions
-    url: https://github.com/arjunu/hulud-scan/discussions
+    url: https://github.com/fullstack-spiderman/hulud-scan/discussions
     about: Ask questions and discuss ideas with the community
   - name: 📖 Documentation
-    url: https://github.com/arjunu/hulud-scan/blob/main/README.md
+    url: https://github.com/fullstack-spiderman/hulud-scan/blob/main/README.md
     about: Read the project documentation
   - name: 🔒 Security Vulnerability
-    url: https://github.com/arjunu/hulud-scan/security/advisories/new
+    url: https://github.com/fullstack-spiderman/hulud-scan/security/advisories/new
     about: Report a security vulnerability privately

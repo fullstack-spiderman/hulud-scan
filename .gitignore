@@ -37,3 +37,7 @@ Thumbs.db
 # Claude
 .claude/
 CLAUDE.md
+
+# Internal documentation (not for public repo)
+OPENSOURCE_CHECKLIST.md
+QUICK_START_GUIDE.md

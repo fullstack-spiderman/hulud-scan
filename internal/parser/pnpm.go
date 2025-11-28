@@ -72,10 +72,8 @@ func ParsePNPMLock(lockfilePath string) (*Lockfile, error) {
 		lockfile.Packages[nodePath] = pkg
 	}
 
-	// Enrich from package.json
-	if err := enrichFromPackageJSON(lockfilePath, lockfile); err != nil {
-		// Non-fatal
-	}
+	// Enrich from package.json (non-fatal, continue without enrichment if it fails)
+	_ = enrichFromPackageJSON(lockfilePath, lockfile)
 
 	return lockfile, nil
 }

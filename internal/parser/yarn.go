@@ -123,10 +123,8 @@ func ParseYarnLock(lockfilePath string) (*Lockfile, error) {
 		return nil, fmt.Errorf("error reading yarn.lock: %w", err)
 	}
 
-	// Try to read package.json for project name and direct dependencies
-	if err := enrichFromPackageJSON(lockfilePath, lockfile); err != nil {
-		// Non-fatal, continue without enrichment
-	}
+	// Try to read package.json for project name and direct dependencies (non-fatal)
+	_ = enrichFromPackageJSON(lockfilePath, lockfile)
 
 	return lockfile, nil
 }

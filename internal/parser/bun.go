@@ -62,10 +62,8 @@ func ParseBunLock(lockfilePath string) (*Lockfile, error) {
 		}
 	}
 
-	// Enrich from package.json
-	if err := enrichFromPackageJSON(lockfilePath, lockfile); err != nil {
-		// Non-fatal
-	}
+	// Enrich from package.json (error is non-fatal)
+	_ = enrichFromPackageJSON(lockfilePath, lockfile)
 
 	return lockfile, nil
 }
@@ -78,8 +76,9 @@ func isBunInstalled() bool {
 
 // parseBunPackageLine parses a line from bun pm ls output
 // Examples:
-//   "lodash@4.17.21" -> "lodash", "4.17.21"
-//   "@babel/core@7.20.0" -> "@babel/core", "7.20.0"
+//
+//	"lodash@4.17.21" -> "lodash", "4.17.21"
+//	"@babel/core@7.20.0" -> "@babel/core", "7.20.0"
 func parseBunPackageLine(line string) (name string, version string) {
 	line = strings.TrimSpace(line)
 

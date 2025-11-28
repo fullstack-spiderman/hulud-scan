@@ -47,7 +47,7 @@ Named after the Shai-Hulud attacks (2024-2025), this tool helps protect your pro
 
 ### Option 1: Download Prebuilt Binary (Recommended - No Go Required!)
 
-> 💡 **Tip:** Visit the [releases page](https://github.com/fullstack-spiderman/hulud-scan/releases/latest) to find the latest version number, then replace `VERSION` in the commands below (e.g., `1.0.3`).
+> 💡 **Tip:** Visit the [releases page](https://github.com/fullstack-spiderman/hulud-scan/releases) to browse all versions. Click on any release to download prebuilt binaries for your platform, or use the commands below with `VERSION` replaced (e.g., `1.0.3`).
 
 **macOS:**
 

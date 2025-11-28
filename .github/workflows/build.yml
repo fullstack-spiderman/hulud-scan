@@ -99,7 +99,7 @@ jobs:
 
       - name: Test binary - scan (Unix)
         if: runner.os != 'Windows'
-        run: ./${{ matrix.artifact }} scan testdata/npm-project --blocklist testdata/sample-blocklist.csv
+        run: ./${{ matrix.artifact }} scan testdata/npm/clean --blocklist testdata/sample-blocklist.csv
 
       - name: Test binary - version (Windows)
         if: runner.os == 'Windows'
@@ -114,5 +114,5 @@ jobs:
 
       - name: Test binary - scan (Windows)
         if: runner.os == 'Windows'
-        run: .\${{ matrix.artifact }} scan testdata\npm-project --blocklist testdata\sample-blocklist.csv
+        run: .\${{ matrix.artifact }} scan testdata\npm\clean --blocklist testdata\sample-blocklist.csv
         shell: pwsh

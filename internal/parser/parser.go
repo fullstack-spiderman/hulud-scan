@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"os"
-	"path/filepath"
 	"strings"
 )
 
@@ -82,7 +81,8 @@ func extractPackageName(path string) string {
 		// For scoped packages, keep the scope and package name
 		parts := strings.Split(name, "/")
 		if len(parts) >= 2 {
-			return filepath.Join(parts[0], parts[1])
+			// return filepath.Join(parts[0], parts[1])
+			return parts[0] + "/" + parts[1]
 		}
 	}
 

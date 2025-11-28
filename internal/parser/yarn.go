@@ -16,7 +16,11 @@ func ParseYarnLock(lockfilePath string) (*Lockfile, error) {
 	if err != nil {
 		return nil, fmt.Errorf("failed to open yarn.lock: %w", err)
 	}
-	defer func() { _ = file.Close() }()
+	defer func() {
+		if closeErr := file.Close(); closeErr != nil {
+			fmt.Printf("Warning: failed to close file: %v\n", closeErr)
+		}
+	}()
 
 	lockfile := &Lockfile{
 		Name:               extractProjectNameFromPath(lockfilePath),
@@ -120,8 +124,9 @@ func ParseYarnLock(lockfilePath string) (*Lockfile, error) {
 	}
 
 	// Try to read package.json for project name and direct dependencies
-	// Error is non-fatal, continue without enrichment
-	_ = enrichFromPackageJSON(lockfilePath, lockfile)
+	if err := enrichFromPackageJSON(lockfilePath, lockfile); err != nil {
+		// Non-fatal, continue without enrichment
+	}
 
 	return lockfile, nil
 }
@@ -158,29 +163,18 @@ func extractPackageNameFromSpec(spec string) string {
 
 // extractProjectNameFromPath extracts project name from lockfile path
 func extractProjectNameFromPath(path string) string {
-	// Normalize path separators for cross-platform compatibility
-	path = filepath.ToSlash(path)
-
-	// Get parent directory name
-	dir := strings.TrimSuffix(path, "/yarn.lock")
-	dir = strings.TrimSuffix(dir, "/package-lock.json")
-	dir = strings.TrimSuffix(dir, "/pnpm-lock.yaml")
-	dir = strings.TrimSuffix(dir, "/bun.lockb")
-
-	parts := strings.Split(dir, "/")
-	if len(parts) > 0 {
-		return parts[len(parts)-1]
-	}
-	return "unknown"
+	// Get parent directory name using filepath for cross-platform compatibility
+	dir := filepath.Dir(path)
+	return filepath.Base(dir)
 }
 
 // enrichFromPackageJSON reads package.json to get project info and direct deps
 func enrichFromPackageJSON(lockfilePath string, lockfile *Lockfile) error {
-	// Find package.json in same directory using proper cross-platform path handling
+	// Find package.json in same directory
 	dir := filepath.Dir(lockfilePath)
-	packageJSONPath := filepath.Join(dir, "package.json")
+	pacakageJSONPath := filepath.Join(dir, "package.json")
 
-	data, err := os.ReadFile(packageJSONPath)
+	data, err := os.ReadFile(pacakageJSONPath)
 	if err != nil {
 		return err // Non-fatal
 	}

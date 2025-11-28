@@ -152,7 +152,7 @@ func runScan(projectPath string, cmd *cobra.Command) error {
 
 	if hasCritical {
 		fmt.Println("❌ Critical security issues detected!")
-		return fmt.Errorf("scan failed: critical issues found")
+		return fmt.Errorf("critical vulnerabilities found in dependencies")
 	}
 
 	return nil

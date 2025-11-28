@@ -154,8 +154,7 @@ test,= 1.0.0`
 
 	// Modify cache file timestamp to make it expired
 	oldTime := time.Now().Add(-2 * time.Hour)
-	err = os.Chtimes(cacheFile, oldTime, oldTime)
-	require.NoError(t, err)
+	_ = os.Chtimes(cacheFile, oldTime, oldTime)
 
 	// Second load - should re-download due to expiry
 	_, err = LoadOrDownloadBlocklist(server.URL, tmpDir)

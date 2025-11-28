@@ -26,7 +26,7 @@ We take the security of hulud-scan seriously. If you believe you have found a se
 2. Click "Report a vulnerability"
 3. Fill out the form with details
 
-**Or send an email to:** [INSERT YOUR EMAIL HERE]
+**Or send an email to:** support@symbiotesai.com
 
 ### What to Include:
 

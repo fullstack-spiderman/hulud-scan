@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"os"
+	"path/filepath"
 	"regexp"
 	"strings"
 )
@@ -132,9 +133,10 @@ func ParseYarnLock(lockfilePath string) (*Lockfile, error) {
 
 // extractPackageNameFromSpec extracts package name from yarn spec
 // Examples:
-//   "lodash@^4.17.20" -> "lodash"
-//   "@babel/core@^7.0.0" -> "@babel/core"
-//   "package@npm:other@1.0.0" -> "package"
+//
+//	"lodash@^4.17.20" -> "lodash"
+//	"@babel/core@^7.0.0" -> "@babel/core"
+//	"package@npm:other@1.0.0" -> "package"
 func extractPackageNameFromSpec(spec string) string {
 	// Remove quotes
 	spec = strings.Trim(spec, "\"'")
@@ -161,30 +163,18 @@ func extractPackageNameFromSpec(spec string) string {
 
 // extractProjectNameFromPath extracts project name from lockfile path
 func extractProjectNameFromPath(path string) string {
-	// Get parent directory name
-	dir := strings.TrimSuffix(path, "/yarn.lock")
-	dir = strings.TrimSuffix(dir, "/package-lock.json")
-	dir = strings.TrimSuffix(dir, "/pnpm-lock.yaml")
-	dir = strings.TrimSuffix(dir, "/bun.lockb")
-
-	parts := strings.Split(dir, "/")
-	if len(parts) > 0 {
-		return parts[len(parts)-1]
-	}
-	return "unknown"
+	// Get parent directory name using filepath for cross-platform compatibility
+	dir := filepath.Dir(path)
+	return filepath.Base(dir)
 }
 
 // enrichFromPackageJSON reads package.json to get project info and direct deps
 func enrichFromPackageJSON(lockfilePath string, lockfile *Lockfile) error {
 	// Find package.json in same directory
-	dir := strings.TrimSuffix(lockfilePath, "/yarn.lock")
-	dir = strings.TrimSuffix(dir, "/package-lock.json")
-	dir = strings.TrimSuffix(dir, "/pnpm-lock.yaml")
-	dir = strings.TrimSuffix(dir, "/bun.lockb")
+	dir := filepath.Dir(lockfilePath)
+	pacakageJSONPath := filepath.Join(dir, "package.json")
 
-	packageJSONPath := dir + "/package.json"
-
-	data, err := os.ReadFile(packageJSONPath)
+	data, err := os.ReadFile(pacakageJSONPath)
 	if err != nil {
 		return err // Non-fatal
 	}

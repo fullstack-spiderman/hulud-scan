@@ -74,6 +74,9 @@ func ParseLockfile(lockfilePath string) (*Lockfile, error) {
 // e.g., "node_modules/lodash" -> "lodash"
 // e.g., "node_modules/@babel/core" -> "@babel/core"
 func extractPackageName(path string) string {
+	// Normalize path separators to forward slashes for cross-platform compatibility
+	path = filepath.ToSlash(path)
+
 	// Remove "node_modules/" prefix
 	name := strings.TrimPrefix(path, "node_modules/")
 
@@ -82,7 +85,7 @@ func extractPackageName(path string) string {
 		// For scoped packages, keep the scope and package name
 		parts := strings.Split(name, "/")
 		if len(parts) >= 2 {
-			return filepath.Join(parts[0], parts[1])
+			return parts[0] + "/" + parts[1]
 		}
 	}
 

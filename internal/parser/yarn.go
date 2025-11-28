@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"os"
+	"path/filepath"
 	"regexp"
 	"strings"
 )
@@ -15,7 +16,7 @@ func ParseYarnLock(lockfilePath string) (*Lockfile, error) {
 	if err != nil {
 		return nil, fmt.Errorf("failed to open yarn.lock: %w", err)
 	}
-	defer file.Close()
+	defer func() { _ = file.Close() }()
 
 	lockfile := &Lockfile{
 		Name:               extractProjectNameFromPath(lockfilePath),
@@ -157,6 +158,9 @@ func extractPackageNameFromSpec(spec string) string {
 
 // extractProjectNameFromPath extracts project name from lockfile path
 func extractProjectNameFromPath(path string) string {
+	// Normalize path separators for cross-platform compatibility
+	path = filepath.ToSlash(path)
+
 	// Get parent directory name
 	dir := strings.TrimSuffix(path, "/yarn.lock")
 	dir = strings.TrimSuffix(dir, "/package-lock.json")
@@ -172,13 +176,9 @@ func extractProjectNameFromPath(path string) string {
 
 // enrichFromPackageJSON reads package.json to get project info and direct deps
 func enrichFromPackageJSON(lockfilePath string, lockfile *Lockfile) error {
-	// Find package.json in same directory
-	dir := strings.TrimSuffix(lockfilePath, "/yarn.lock")
-	dir = strings.TrimSuffix(dir, "/package-lock.json")
-	dir = strings.TrimSuffix(dir, "/pnpm-lock.yaml")
-	dir = strings.TrimSuffix(dir, "/bun.lockb")
-
-	packageJSONPath := dir + "/package.json"
+	// Find package.json in same directory using proper cross-platform path handling
+	dir := filepath.Dir(lockfilePath)
+	packageJSONPath := filepath.Join(dir, "package.json")
 
 	data, err := os.ReadFile(packageJSONPath)
 	if err != nil {

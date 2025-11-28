@@ -24,19 +24,19 @@ type BlocklistEntry struct {
 
 // Blocklist is a collection of known compromised packages
 type Blocklist struct {
-	Entries []BlocklistEntry        // All blocklist entries
-	Index   map[string][]int        // Index: package name -> entry indices (for fast lookup)
+	Entries []BlocklistEntry // All blocklist entries
+	Index   map[string][]int // Index: package name -> entry indices (for fast lookup)
 }
 
 // Finding represents a security issue found during scanning
 type Finding struct {
-	PackageName string            // Package that was flagged
-	Version     string            // Version that was flagged
+	PackageName string               // Package that was flagged
+	Version     string               // Version that was flagged
 	Path        graph.DependencyPath // How we got to this package
-	Severity    Severity          // Severity of the issue
-	Reason      string            // Why it was flagged
-	CVE         string            // CVE if applicable
-	IsDirect    bool              // Is this a direct dependency?
+	Severity    Severity             // Severity of the issue
+	Reason      string               // Why it was flagged
+	CVE         string               // CVE if applicable
+	IsDirect    bool                 // Is this a direct dependency?
 }
 
 // ScanResult contains all findings from a scan

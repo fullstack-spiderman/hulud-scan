@@ -12,4 +12,16 @@ This wiki contains helpful information about the project, including:
 - Contribution guidelines
 - Frequently Asked Questions (FAQ)
 
+## Additional Documentation
+
+For more information, be sure to review these important documentation files found in the repository:
+
+- <a>README.md</a>
+- <a>INSTALLATION.md</a>
+- <a>CHANGELOG.md</a>
+- <a>CODE_OF_CONDUCT.md</a>
+- <a>CONTRIBUTING.md</a>
+- <a>SECURITY.md</a>
+- <a>STATUS.md</a>
+
 Feel free to explore the pages and contribute to improving the documentation!

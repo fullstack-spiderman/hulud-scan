@@ -22,7 +22,7 @@ for known compromised packages and suspicious lifecycle scripts.`,
 	Args: cobra.MaximumNArgs(1), // Accept 0 or 1 arguments
 	Run: func(cmd *cobra.Command, args []string) {
 		// This function runs when the command is executed
-		path := "."  // Default to current directory
+		path := "." // Default to current directory
 		if len(args) > 0 {
 			path = args[0]
 		}
@@ -152,7 +152,7 @@ func runScan(projectPath string, cmd *cobra.Command) error {
 
 	if hasCritical {
 		fmt.Println("❌ Critical security issues detected!")
-		return fmt.Errorf("scan failed: critical issues found")
+		return fmt.Errorf("critical vulnerabilities found in dependencies")
 	}
 
 	return nil

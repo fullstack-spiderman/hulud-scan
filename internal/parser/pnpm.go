@@ -72,10 +72,8 @@ func ParsePNPMLock(lockfilePath string) (*Lockfile, error) {
 		lockfile.Packages[nodePath] = pkg
 	}
 
-	// Enrich from package.json
-	if err := enrichFromPackageJSON(lockfilePath, lockfile); err != nil {
-		// Non-fatal
-	}
+	// Enrich from package.json (non-fatal, continue without enrichment if it fails)
+	_ = enrichFromPackageJSON(lockfilePath, lockfile)
 
 	return lockfile, nil
 }
@@ -121,7 +119,10 @@ func parsePNPMLockfileVersion(version interface{}) int {
 	case string:
 		// Try to parse as int
 		var result int
-		fmt.Sscanf(v, "%d", &result)
+		if _, err := fmt.Sscanf(v, "%d", &result); err != nil {
+			// If parsing fails, return 0 as default
+			return 0
+		}
 		return result
 	default:
 		return 0

@@ -35,7 +35,7 @@ If you see `go version go1.21.x` or higher, you're good to go! ✅
 # Using Homebrew
 brew install go
 
-# Or download from https://go.dev/dl/
+# Or download from <https://go.dev/dl/>
 ```
 
 **Linux (Ubuntu/Debian):**
@@ -44,11 +44,11 @@ brew install go
 sudo apt update
 sudo apt install golang-go
 
-# Or download from https://go.dev/dl/
+# Or download from <https://go.dev/dl/>
 ```
 
 **Windows:**
-- Download installer from: https://go.dev/dl/
+- Download installer from: <https://go.dev/dl/>
 - Run the `.msi` installer
 - Restart your terminal after installation
 
@@ -62,7 +62,7 @@ sudo apt install golang-go
 
 ```bash
 # 1. Clone the repository
-git clone https://github.com/arjunu/hulud-scan.git
+git clone <https://github.com/arjunu/hulud-scan.git>
 cd hulud-scan
 
 # 2. Build the binary
@@ -113,7 +113,7 @@ sudo apt install git  # Ubuntu/Debian
 # sudo pacman -S git    # Arch
 
 # 2. Clone the repository
-git clone https://github.com/arjunu/hulud-scan.git
+git clone <https://github.com/arjunu/hulud-scan.git>
 cd hulud-scan
 
 # 3. Build the binary
@@ -161,10 +161,10 @@ hulud-scan scan /home/user/my-project
 
 ```powershell
 # 1. Install Git (if not installed)
-# Download from: https://git-scm.com/download/win
+# Download from: <https://git-scm.com/download/win>
 
 # 2. Clone the repository
-git clone https://github.com/arjunu/hulud-scan.git
+git clone <https://github.com/arjunu/hulud-scan.git>
 cd hulud-scan
 
 # 3. Build the binary
@@ -265,7 +265,7 @@ hulud-scan automatically detects and scans:
 Project: my-app@1.0.0
 
 📊 Building dependency graph...
-📋 Loading blocklist from: https://github.com/wiz-sec-public/...
+📋 Loading blocklist from: <https://github.com/wiz-sec-public/...>
 ✅ Loaded 795 blocklist entries
 
 🔍 Scanning for compromised packages...
@@ -419,7 +419,7 @@ Go is not installed or not in PATH.
 **macOS:**
 ```bash
 brew install go
-# Or download from https://go.dev/dl/
+# Or download from <https://go.dev/dl/>
 ```
 
 **Linux:**
@@ -429,7 +429,7 @@ sudo dnf install golang     # Fedora
 ```
 
 **Windows:**
-- Download and install from: https://go.dev/dl/
+- Download and install from: <https://go.dev/dl/>
 - Restart terminal after installation
 
 ### Issue: "no supported lockfile found"
@@ -462,7 +462,7 @@ For Bun, you need the Bun CLI installed:
 
 **macOS/Linux:**
 ```bash
-curl -fsSL https://bun.sh/install | bash
+curl -fsSL <https://bun.sh/install> | bash
 ```
 
 **Windows:**
@@ -574,7 +574,7 @@ hulud-scan --version
 
 ## Support
 
-- **Issues**: https://github.com/arjunu/hulud-scan/issues
+- **Issues**: <https://github.com/arjunu/hulud-scan/issues>
 - **Documentation**: See README.md and STATUS.md
 - **Examples**: See testdata/ directory
 

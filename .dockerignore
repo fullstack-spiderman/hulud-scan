@@ -1,0 +1,47 @@
+# Git
+.git/
+.gitignore
+.github/
+
+# Documentation
+*.md
+!README.md
+LICENSE
+docs/
+
+# Build artifacts
+hulud-scan
+hulud-scan.exe
+*.test
+*.out
+coverage.out
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Test data (we don't need this in Docker image)
+testdata/
+
+# Cache
+.hulud-scan/
+*.log
+
+# Claude
+.claude/
+CLAUDE.md
+
+# Screenshots
+screensnippets/
+
+# Temporary files
+tmp/
+temp/
+*.tmp

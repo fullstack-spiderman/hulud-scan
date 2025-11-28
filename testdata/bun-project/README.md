@@ -12,8 +12,8 @@ Bun project setup for testing bun.lockb parsing.
 
 ## Generate Lockfile
 ```bash
-# Install Bun first: https://bun.sh
-curl -fsSL https://bun.sh/install | bash
+# Install Bun first: <https://bun.sh>
+curl -fsSL <https://bun.sh/install> | bash
 
 # Generate lockfile
 cd testdata/bun-project
@@ -34,5 +34,5 @@ Since bun.lockb is binary, hulud-scan uses the `bun pm ls` command to read the l
 If Bun is not installed, you'll see:
 ```
 Error: bun.lockb detected but 'bun' CLI is not installed or not in PATH
-Please install Bun from https://bun.sh or use a different package manager
+Please install Bun from <https://bun.sh> or use a different package manager
 ```

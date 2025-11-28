@@ -2,7 +2,7 @@
 
 > Supply-chain security scanner for JavaScript/TypeScript projects
 
-[![Go Version](https://img.shields.io/badge/Go-1.21+-00ADD8?style=flat&logo=go)](https://go.dev) [![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE) [![Test](https://github.com/fullstack-spiderman/hulud-scan/actions/workflows/test.yml/badge.svg)](https://github.com/fullstack-spiderman/hulud-scan/actions/workflows/test.yml) [![Build](https://github.com/fullstack-spiderman/hulud-scan/actions/workflows/build.yml/badge.svg)](https://github.com/fullstack-spiderman/hulud-scan/actions/workflows/build.yml) [![Release](https://github.com/fullstack-spiderman/hulud-scan/actions/workflows/release.yml/badge.svg)](https://github.com/fullstack-spiderman/hulud-scan/actions/workflows/release.yml)
+[![Go Version](https://img.shields.io/badge/Go-1.21+-00ADD8?style=flat&logo=go)](https://go.dev) [![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE) [![Release](https://img.shields.io/github/v/release/fullstack-spiderman/hulud-scan)](https://github.com/fullstack-spiderman/hulud-scan/releases/latest) [![Test](https://github.com/fullstack-spiderman/hulud-scan/actions/workflows/test.yml/badge.svg)](https://github.com/fullstack-spiderman/hulud-scan/actions/workflows/test.yml) [![Build](https://github.com/fullstack-spiderman/hulud-scan/actions/workflows/build.yml/badge.svg)](https://github.com/fullstack-spiderman/hulud-scan/actions/workflows/build.yml)
 
 **hulud-scan** is an open-source CLI tool that detects compromised packages and supply-chain attacks in JavaScript/TypeScript projects by scanning lockfiles and comparing against known blocklists.
 
@@ -47,19 +47,19 @@ Named after the Shai-Hulud attacks (2024-2025), this tool helps protect your pro
 
 ### Option 1: Download Prebuilt Binary (Recommended - No Go Required!)
 
-**Latest Release:** [v1.0.2](https://github.com/fullstack-spiderman/hulud-scan/releases/latest)
+> 💡 **Tip:** Visit the [releases page](https://github.com/fullstack-spiderman/hulud-scan/releases/latest) to find the latest version number, then replace `VERSION` in the commands below (e.g., `1.0.3`).
 
 **macOS:**
 
 ```bash
 # Intel Macs
-curl -LO https://github.com/fullstack-spiderman/hulud-scan/releases/latest/download/hulud-scan_1.0.2_darwin_amd64.tar.gz
-tar -xzf hulud-scan_1.0.2_darwin_amd64.tar.gz
+curl -LO https://github.com/fullstack-spiderman/hulud-scan/releases/latest/download/hulud-scan_VERSION_darwin_amd64.tar.gz
+tar -xzf hulud-scan_VERSION_darwin_amd64.tar.gz
 sudo mv hulud-scan /usr/local/bin/
 
 # Apple Silicon (M1/M2/M3/M4)
-curl -LO https://github.com/fullstack-spiderman/hulud-scan/releases/latest/download/hulud-scan_1.0.2_darwin_arm64.tar.gz
-tar -xzf hulud-scan_1.0.2_darwin_arm64.tar.gz
+curl -LO https://github.com/fullstack-spiderman/hulud-scan/releases/latest/download/hulud-scan_VERSION_darwin_arm64.tar.gz
+tar -xzf hulud-scan_VERSION_darwin_arm64.tar.gz
 sudo mv hulud-scan /usr/local/bin/
 ```
 
@@ -67,13 +67,13 @@ sudo mv hulud-scan /usr/local/bin/
 
 ```bash
 # x86_64
-curl -LO https://github.com/fullstack-spiderman/hulud-scan/releases/latest/download/hulud-scan_1.0.2_linux_amd64.tar.gz
-tar -xzf hulud-scan_1.0.2_linux_amd64.tar.gz
+curl -LO https://github.com/fullstack-spiderman/hulud-scan/releases/latest/download/hulud-scan_VERSION_linux_amd64.tar.gz
+tar -xzf hulud-scan_VERSION_linux_amd64.tar.gz
 sudo mv hulud-scan /usr/local/bin/
 
 # ARM64
-curl -LO https://github.com/fullstack-spiderman/hulud-scan/releases/latest/download/hulud-scan_1.0.2_linux_arm64.tar.gz
-tar -xzf hulud-scan_1.0.2_linux_arm64.tar.gz
+curl -LO https://github.com/fullstack-spiderman/hulud-scan/releases/latest/download/hulud-scan_VERSION_linux_arm64.tar.gz
+tar -xzf hulud-scan_VERSION_linux_arm64.tar.gz
 sudo mv hulud-scan /usr/local/bin/
 ```
 
@@ -84,12 +84,12 @@ sudo mv hulud-scan /usr/local/bin/
 # Visit: https://github.com/fullstack-spiderman/hulud-scan/releases/latest
 
 # For Windows x64:
-# 1. Download hulud-scan_1.0.2_windows_amd64.zip
+# 1. Download hulud-scan_VERSION_windows_amd64.zip
 # 2. Extract the archive
 # 3. Add to PATH or run from extracted directory
 
 # Or using PowerShell (x64):
-Invoke-WebRequest -Uri "https://github.com/fullstack-spiderman/hulud-scan/releases/latest/download/hulud-scan_1.0.2_windows_amd64.zip" -OutFile "hulud-scan.zip"
+Invoke-WebRequest -Uri "https://github.com/fullstack-spiderman/hulud-scan/releases/latest/download/hulud-scan_VERSION_windows_amd64.zip" -OutFile "hulud-scan.zip"
 Expand-Archive -Path hulud-scan.zip -DestinationPath .
 ```
 
@@ -312,34 +312,32 @@ We welcome contributions! Whether it's:
 
 ## 🗺️ Roadmap
 
-### ✅ Phase 1 - CLI (Complete!)
+### ✅ Completed Features
 
 - [x] Multi-package manager support (npm, Yarn, pnpm, Bun)
-- [x] Auto-detection
-- [x] Blocklist scanning
-- [x] Dependency graph analysis
-- [x] CI/CD integration
+- [x] Automatic lockfile detection
+- [x] Blocklist scanning with local & remote support
+- [x] Dependency graph analysis & path tracking
+- [x] CI/CD integration with exit codes
+- [x] JSON & pretty output formats
+- [x] Comprehensive test coverage (80%+)
+- [x] GitHub Actions CI/CD workflows (Test, Build, Release)
+- [x] GoReleaser for multi-platform binaries
+- [x] Homebrew tap support (macOS)
+- [x] Scoop bucket support (Windows)
+- [x] Docker image publishing
 
-### 🔄 Phase 2 - Enhanced CLI (Planned)
+### 🔄 Planned Enhancements
 
-- [ ] Lifecycle script detection
-- [ ] Config file support
-- [ ] Whitelist/ignore mechanism
-- [ ] Multiple output formats (HTML, SARIF)
+- [ ] Lifecycle script detection & analysis
+- [ ] Config file support (`.hulud-scan.yaml`)
+- [ ] Whitelist/ignore mechanism for false positives
+- [ ] Multiple output formats (HTML, SARIF for GitHub Code Scanning)
 - [ ] Yarn Berry (v2+) support
-
-### 🔮 Phase 3 - TUI (Future)
-
-- [ ] Interactive terminal UI
-- [ ] Visual dependency tree
-- [ ] Real-time filtering
-
-### 🌐 Phase 4 - Web Dashboard (Future)
-
-- [ ] Multi-repo monitoring
-- [ ] Historical tracking
-- [ ] Alerts & notifications
-- [ ] Team collaboration
+- [ ] Progress indicators for large projects
+- [ ] Verbose/debug logging mode
+- [ ] Interactive terminal UI (TUI)
+- [ ] Web dashboard for multi-repo monitoring
 
 ---
 

@@ -397,4 +397,4 @@ MIT License - see [LICENSE](LICENSE) file for details
 
 ---
 
-*Built with ❤️ by [@arjunu](https://github.com/arjunu)*
+*Built with ❤️ by [@arjun]([https://github.com/arjunu](https://github.com/fullstack-spiderman))*

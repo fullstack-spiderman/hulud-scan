@@ -1,6 +1,6 @@
 package graph
 
-import "github.com/arjunu/hulud-scan/internal/parser"
+import "github.com/fullstack-spiderman/hulud-scan/internal/parser"
 
 // Node represents a package in the dependency graph
 type Node struct {

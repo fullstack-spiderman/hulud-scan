@@ -3,7 +3,7 @@ package main
 import (
 	"os"
 
-	"github.com/arjunu/hulud-scan/cmd"
+	"github.com/fullstack-spiderman/hulud-scan/cmd"
 )
 
 // Version information set via ldflags during build

@@ -45,7 +45,61 @@ Named after the Shai-Hulud attacks (2024-2025), this tool helps protect your pro
 
 ## 📦 Installation
 
-### Quick Install (All Platforms)
+### Option 1: Download Prebuilt Binary (Recommended - No Go Required!)
+
+**Latest Release:** [v1.0.2](https://github.com/fullstack-spiderman/hulud-scan/releases/latest)
+
+**macOS:**
+
+```bash
+# Intel Macs
+curl -LO https://github.com/fullstack-spiderman/hulud-scan/releases/latest/download/hulud-scan_1.0.2_darwin_amd64.tar.gz
+tar -xzf hulud-scan_1.0.2_darwin_amd64.tar.gz
+sudo mv hulud-scan /usr/local/bin/
+
+# Apple Silicon (M1/M2/M3/M4)
+curl -LO https://github.com/fullstack-spiderman/hulud-scan/releases/latest/download/hulud-scan_1.0.2_darwin_arm64.tar.gz
+tar -xzf hulud-scan_1.0.2_darwin_arm64.tar.gz
+sudo mv hulud-scan /usr/local/bin/
+```
+
+**Linux:**
+
+```bash
+# x86_64
+curl -LO https://github.com/fullstack-spiderman/hulud-scan/releases/latest/download/hulud-scan_1.0.2_linux_amd64.tar.gz
+tar -xzf hulud-scan_1.0.2_linux_amd64.tar.gz
+sudo mv hulud-scan /usr/local/bin/
+
+# ARM64
+curl -LO https://github.com/fullstack-spiderman/hulud-scan/releases/latest/download/hulud-scan_1.0.2_linux_arm64.tar.gz
+tar -xzf hulud-scan_1.0.2_linux_arm64.tar.gz
+sudo mv hulud-scan /usr/local/bin/
+```
+
+**Windows:**
+
+```powershell
+# Download the latest release
+# Visit: https://github.com/fullstack-spiderman/hulud-scan/releases/latest
+
+# For Windows x64:
+# 1. Download hulud-scan_1.0.2_windows_amd64.zip
+# 2. Extract the archive
+# 3. Add to PATH or run from extracted directory
+
+# Or using PowerShell (x64):
+Invoke-WebRequest -Uri "https://github.com/fullstack-spiderman/hulud-scan/releases/latest/download/hulud-scan_1.0.2_windows_amd64.zip" -OutFile "hulud-scan.zip"
+Expand-Archive -Path hulud-scan.zip -DestinationPath .
+```
+
+**Verify Installation:**
+
+```bash
+hulud-scan --version
+```
+
+### Option 2: Install with Go
 
 **Prerequisites:** [Go 1.21+](https://go.dev/dl/)
 
@@ -58,6 +112,12 @@ git clone https://github.com/fullstack-spiderman/hulud-scan.git
 cd hulud-scan
 go build -o hulud-scan
 ```
+
+### Option 3: Package Managers (Coming Soon)
+
+🚧 Homebrew (macOS) and Scoop (Windows) support planned for future releases.
+
+---
 
 📖 **See [INSTALLATION.md](INSTALLATION.md) for detailed platform-specific instructions** (macOS, Linux, Windows)
 
@@ -84,7 +144,7 @@ hulud-scan scan . --format json
 
 ### Example Output
 
-```
+```text
 🔍 Scanning project at: ./my-app
 🔎 Detecting lockfile in: ./my-app
 📄 Detected: npm (package-lock.json)

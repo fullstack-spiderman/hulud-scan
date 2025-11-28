@@ -21,16 +21,18 @@ Complete guide for installing and using hulud-scan on macOS, Windows, and Linux.
 
 You need **Go 1.21+** installed to build hulud-scan.
 
-#### Check if Go is installed:
+#### Check if Go is installed
+
 ```bash
 go version
 ```
 
 If you see `go version go1.21.x` or higher, you're good to go! ✅
 
-#### Install Go if needed:
+#### Install Go if needed
 
 **macOS:**
+
 ```bash
 # Using Homebrew
 brew install go
@@ -39,6 +41,7 @@ brew install go
 ```
 
 **Linux (Ubuntu/Debian):**
+
 ```bash
 # Using apt
 sudo apt update
@@ -48,6 +51,7 @@ sudo apt install golang-go
 ```
 
 **Windows:**
+
 - Download installer from: <https://go.dev/dl/>
 - Run the `.msi` installer
 - Restart your terminal after installation
@@ -58,11 +62,32 @@ sudo apt install golang-go
 
 ### macOS
 
-#### Option 1: Build from Source
+#### Option 1: Prebuilt Binary (Recommended - No Go Required!)
+
+**Latest Release:** [v1.0.2](https://github.com/fullstack-spiderman/hulud-scan/releases/latest)
+
+```bash
+# Intel Macs (x86_64)
+curl -LO https://github.com/fullstack-spiderman/hulud-scan/releases/latest/download/hulud-scan_1.0.2_darwin_amd64.tar.gz
+tar -xzf hulud-scan_1.0.2_darwin_amd64.tar.gz
+sudo mv hulud-scan /usr/local/bin/
+
+# Apple Silicon (M1/M2/M3/M4 - ARM64)
+curl -LO https://github.com/fullstack-spiderman/hulud-scan/releases/latest/download/hulud-scan_1.0.2_darwin_arm64.tar.gz
+tar -xzf hulud-scan_1.0.2_darwin_arm64.tar.gz
+sudo mv hulud-scan /usr/local/bin/
+
+# Verify installation
+hulud-scan --version
+```
+
+#### Option 2: Build from Source
+
+**Prerequisites:** [Go 1.21+](https://go.dev/dl/)
 
 ```bash
 # 1. Clone the repository
-git clone <https://github.com/fullstack-spiderman/hulud-scan.git>
+git clone https://github.com/fullstack-spiderman/hulud-scan.git
 cd hulud-scan
 
 # 2. Build the binary
@@ -75,7 +100,9 @@ sudo mv hulud-scan /usr/local/bin/
 hulud-scan --version
 ```
 
-#### Option 2: Direct Build Without Clone
+#### Option 3: Direct Build Without Clone
+
+**Prerequisites:** [Go 1.21+](https://go.dev/dl/)
 
 ```bash
 # Install directly with Go
@@ -104,7 +131,28 @@ hulud-scan scan /path/to/your/project
 
 ### Linux
 
-#### Option 1: Build from Source (Ubuntu/Debian/Fedora/Arch)
+#### Option 1: Prebuilt Binary (No Go Required!)
+
+**Latest Release:** [v1.0.2](https://github.com/fullstack-spiderman/hulud-scan/releases/latest)
+
+```bash
+# x86_64 (Intel/AMD 64-bit)
+curl -LO https://github.com/fullstack-spiderman/hulud-scan/releases/latest/download/hulud-scan_1.0.2_linux_amd64.tar.gz
+tar -xzf hulud-scan_1.0.2_linux_amd64.tar.gz
+sudo mv hulud-scan /usr/local/bin/
+
+# ARM64 (Raspberry Pi, ARM servers)
+curl -LO https://github.com/fullstack-spiderman/hulud-scan/releases/latest/download/hulud-scan_1.0.2_linux_arm64.tar.gz
+tar -xzf hulud-scan_1.0.2_linux_arm64.tar.gz
+sudo mv hulud-scan /usr/local/bin/
+
+# Verify installation
+hulud-scan --version
+```
+
+#### Option 2: Build from Source (Ubuntu/Debian/Fedora/Arch)
+
+**Prerequisites:** [Go 1.21+](https://go.dev/dl/)
 
 ```bash
 # 1. Install Git (if not installed)
@@ -113,7 +161,7 @@ sudo apt install git  # Ubuntu/Debian
 # sudo pacman -S git    # Arch
 
 # 2. Clone the repository
-git clone <https://github.com/fullstack-spiderman/hulud-scan.git>
+git clone https://github.com/fullstack-spiderman/hulud-scan.git
 cd hulud-scan
 
 # 3. Build the binary
@@ -129,7 +177,9 @@ sudo mv hulud-scan /usr/local/bin/
 hulud-scan --version
 ```
 
-#### Option 2: Direct Install with Go
+#### Option 3: Direct Install with Go
+
+**Prerequisites:** [Go 1.21+](https://go.dev/dl/)
 
 ```bash
 # Install directly
@@ -157,14 +207,51 @@ hulud-scan scan /home/user/my-project
 
 ### Windows
 
-#### Option 1: Build from Source (PowerShell/CMD)
+#### Option 1: Prebuilt Binary (Easiest Option!)
+
+**Latest Release:** [v1.0.2](https://github.com/fullstack-spiderman/hulud-scan/releases/latest)
+
+**Using Browser:**
+
+1. Visit: [GitHub Releases](https://github.com/fullstack-spiderman/hulud-scan/releases/latest)
+2. Download:
+   - `hulud-scan_1.0.2_windows_amd64.zip` (for x64 systems)
+   - `hulud-scan_1.0.2_windows_arm64.zip` (for ARM64 systems)
+3. Extract the `.zip` file
+4. Add to your PATH or run from the extracted directory
+
+**Using PowerShell (x64):**
+
+```powershell
+# Download and extract
+Invoke-WebRequest -Uri "https://github.com/fullstack-spiderman/hulud-scan/releases/latest/download/hulud-scan_1.0.2_windows_amd64.zip" -OutFile "hulud-scan.zip"
+Expand-Archive -Path hulud-scan.zip -DestinationPath .
+
+# Verify installation
+.\hulud-scan.exe --version
+```
+
+**Using PowerShell (ARM64):**
+
+```powershell
+# Download and extract
+Invoke-WebRequest -Uri "https://github.com/fullstack-spiderman/hulud-scan/releases/latest/download/hulud-scan_1.0.2_windows_arm64.zip" -OutFile "hulud-scan.zip"
+Expand-Archive -Path hulud-scan.zip -DestinationPath .
+
+# Verify installation
+.\hulud-scan.exe --version
+```
+
+#### Option 2: Build from Source (PowerShell/CMD)
+
+**Prerequisites:** [Go 1.21+](https://go.dev/dl/)
 
 ```powershell
 # 1. Install Git (if not installed)
-# Download from: <https://git-scm.com/download/win>
+# Download from: https://git-scm.com/download/win
 
 # 2. Clone the repository
-git clone <https://github.com/fullstack-spiderman/hulud-scan.git>
+git clone https://github.com/fullstack-spiderman/hulud-scan.git
 cd hulud-scan
 
 # 3. Build the binary
@@ -173,7 +260,9 @@ go build -o hulud-scan.exe
 # 4. The executable is now ready: hulud-scan.exe
 ```
 
-#### Option 2: Direct Install with Go
+#### Option 3: Install with Go
+
+**Prerequisites:** [Go 1.21+](https://go.dev/dl/)
 
 ```powershell
 # Install directly
@@ -186,6 +275,7 @@ go install github.com/fullstack-spiderman/hulud-scan@latest
 #### Using the Tool on Windows
 
 **PowerShell:**
+
 ```powershell
 # Scan current directory
 .\hulud-scan.exe scan
@@ -198,6 +288,7 @@ hulud-scan scan C:\Users\YourName\my-project
 ```
 
 **Command Prompt (cmd):**
+
 ```cmd
 # Scan current directory
 hulud-scan.exe scan
@@ -207,6 +298,7 @@ hulud-scan.exe scan C:\Users\YourName\my-project
 ```
 
 **Git Bash (recommended for Windows):**
+
 ```bash
 # Scan current directory
 ./hulud-scan.exe scan
@@ -235,6 +327,7 @@ hulud-scan scan /path/to/your/project
 ### What Gets Scanned?
 
 hulud-scan automatically detects and scans:
+
 - ✅ `package-lock.json` (npm)
 - ✅ `yarn.lock` (Yarn)
 - ✅ `pnpm-lock.yaml` (pnpm)
@@ -247,17 +340,20 @@ hulud-scan automatically detects and scans:
 ### Example 1: Scan a Project with Default Settings
 
 **macOS/Linux:**
+
 ```bash
 ./hulud-scan scan ~/projects/my-app
 ```
 
 **Windows (PowerShell):**
+
 ```powershell
 .\hulud-scan.exe scan C:\projects\my-app
 ```
 
 **Output:**
-```
+
+```text
 🔍 Scanning project at: ~/projects/my-app
 🔎 Detecting lockfile in: ~/projects/my-app
 📄 Detected: npm (package-lock.json)
@@ -283,11 +379,13 @@ Issues found: 0
 ### Example 2: Use Custom Blocklist
 
 **macOS/Linux:**
+
 ```bash
 ./hulud-scan scan . --blocklist ./my-blocklist.csv
 ```
 
 **Windows:**
+
 ```powershell
 .\hulud-scan.exe scan . --blocklist .\my-blocklist.csv
 ```
@@ -295,11 +393,13 @@ Issues found: 0
 ### Example 3: Disable Caching (Always Fresh Download)
 
 **macOS/Linux:**
+
 ```bash
 ./hulud-scan scan . --no-cache
 ```
 
 **Windows:**
+
 ```powershell
 .\hulud-scan.exe scan . --no-cache
 ```
@@ -307,6 +407,7 @@ Issues found: 0
 ### Example 4: Scan Multiple Projects
 
 **macOS/Linux (Bash):**
+
 ```bash
 #!/bin/bash
 for project in ~/projects/*; do
@@ -316,6 +417,7 @@ done
 ```
 
 **Windows (PowerShell):**
+
 ```powershell
 Get-ChildItem C:\projects | ForEach-Object {
     Write-Host "Scanning $($_.FullName)"
@@ -326,6 +428,7 @@ Get-ChildItem C:\projects | ForEach-Object {
 ### Example 5: Use in CI/CD
 
 **GitHub Actions (All Platforms):**
+
 ```yaml
 name: Security Scan
 on: [push, pull_request]
@@ -349,6 +452,7 @@ jobs:
 ```
 
 **GitLab CI (All Platforms):**
+
 ```yaml
 security_scan:
   image: golang:1.21
@@ -361,21 +465,21 @@ security_scan:
 
 ## Platform-Specific Notes
 
-### macOS
+### macOS Notes
 
 - **Binary Location**: After building, `hulud-scan` is in the current directory
 - **Global Install**: Move to `/usr/local/bin/` for system-wide access
 - **Permissions**: No special permissions needed (unless moving to `/usr/local/bin/`)
 - **Shell**: Works in Terminal, iTerm2, and any bash/zsh shell
 
-### Linux
+### Linux Notes
 
 - **Binary Location**: After building, `hulud-scan` is in the current directory
 - **Global Install**: Move to `/usr/local/bin/` or `~/.local/bin/`
 - **Permissions**: May need `sudo` to move to `/usr/local/bin/`
 - **Shell**: Works in any shell (bash, zsh, fish, etc.)
 
-### Windows
+### Windows Notes
 
 - **Binary Name**: Use `hulud-scan.exe` (not just `hulud-scan`)
 - **Path Prefix**: Use `.\` for current directory in PowerShell/CMD
@@ -392,6 +496,7 @@ security_scan:
 ### Issue: "command not found" or "not recognized"
 
 **macOS/Linux:**
+
 ```bash
 # Make sure the binary is executable
 chmod +x hulud-scan
@@ -404,6 +509,7 @@ export PATH="$PATH:$(pwd)"
 ```
 
 **Windows:**
+
 ```powershell
 # Use full filename with .exe
 .\hulud-scan.exe scan
@@ -417,18 +523,21 @@ $env:PATH += ";$(Get-Location)"
 Go is not installed or not in PATH.
 
 **macOS:**
+
 ```bash
 brew install go
 # Or download from <https://go.dev/dl/>
 ```
 
 **Linux:**
+
 ```bash
 sudo apt install golang-go  # Ubuntu/Debian
 sudo dnf install golang     # Fedora
 ```
 
 **Windows:**
+
 - Download and install from: <https://go.dev/dl/>
 - Restart terminal after installation
 
@@ -437,21 +546,25 @@ sudo dnf install golang     # Fedora
 Your project doesn't have a lockfile. Generate one:
 
 **npm:**
+
 ```bash
 npm install
 ```
 
 **Yarn:**
+
 ```bash
 yarn install
 ```
 
 **pnpm:**
+
 ```bash
 pnpm install
 ```
 
 **Bun:**
+
 ```bash
 bun install
 ```
@@ -461,11 +574,13 @@ bun install
 For Bun, you need the Bun CLI installed:
 
 **macOS/Linux:**
+
 ```bash
 curl -fsSL <https://bun.sh/install> | bash
 ```
 
 **Windows:**
+
 ```powershell
 powershell -c "irm bun.sh/install.ps1 | iex"
 ```
@@ -485,6 +600,7 @@ sudo mv hulud-scan /usr/local/bin/
 The first run downloads the blocklist (795 entries). Subsequent runs use cache.
 
 To force fresh download:
+
 ```bash
 ./hulud-scan scan . --no-cache
 ```
@@ -496,11 +612,13 @@ To force fresh download:
 ### Custom Cache Directory
 
 **macOS/Linux:**
+
 ```bash
 ./hulud-scan scan . --cache-dir ~/.my-custom-cache
 ```
 
 **Windows:**
+
 ```powershell
 .\hulud-scan.exe scan . --cache-dir C:\Users\YourName\.cache\hulud
 ```
@@ -522,11 +640,13 @@ Flags:
 ### Example: JSON Output
 
 **macOS/Linux:**
+
 ```bash
 ./hulud-scan scan . --format json > results.json
 ```
 
 **Windows:**
+
 ```powershell
 .\hulud-scan.exe scan . --format json > results.json
 ```
@@ -545,7 +665,7 @@ sudo rm /usr/local/bin/hulud-scan
 rm -rf ~/.hulud-scan
 ```
 
-### Windows
+### Windows Uninstall
 
 ```powershell
 # Delete the binary
@@ -579,5 +699,3 @@ hulud-scan --version
 - **Examples**: See testdata/ directory
 
 ---
-
-*Last updated: 2025-11-27*

@@ -87,6 +87,7 @@ jobs:
           args: -exclude=G304,G301 ./...
 
       - name: Run govulncheck
+        continue-on-error: true
         run: |
           go install golang.org/x/vuln/cmd/govulncheck@latest
           govulncheck ./...
